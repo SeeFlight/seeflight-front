@@ -1,0 +1,29 @@
+{
+  "name": "seeflight-front",
+  "version": "1.0.0",
+  "description": "Best flight aggregator ever",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies" :
+  { 
+  	"body-parser" : "~1.14.1",
+  	"cookie-parser" : "~1.4.0",
+  	"ejs" : "~2.3.4",
+  	"express" : "~4.13.3",
+  	"fs" : "~0.0.2",
+  	"glob" : "~5.0.15",
+  	"helmet" : "~0.12.0",
+  	"https" : "~1.0.0",
+  	"lodash" : "~3.10.1",
+  	"multer" : "~1.0.6",
+  	"path" : "~0.12.7",
+  	"properties-reader" : "~0.0.11",
+  	"serve-favicon" : "~2.3.0",
+	"gulp" : "~3.9.0",
+	"gulp-concat" : "~2.6.0"
+  }
+}
