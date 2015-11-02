@@ -50,6 +50,8 @@ module.exports = function() {
 	});
 
 	app
+	.use('/templates', express.static(__dirname + '/../app/templates')) 
+	.use('/css', express.static(__dirname + '/../app/css')) 
 	.use('/js', express.static(__dirname + '/../app/js')) 
 	.use('/bower_components', express.static(__dirname + '/../app/bower_components')) 
 	.use('/fonts', express.static(__dirname + '/../app/fonts'))

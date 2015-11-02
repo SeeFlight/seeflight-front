@@ -1,25 +1,21 @@
-var module = angular.module('seeflight', ['seeflight.controllers', 'seeflight.services', 'seeflight.interceptors', 'seeflight.properties'])
+var module = angular.module('seeflight', ['ui.router', 'seeflight.controllers', 'seeflight.services', 'seeflight.properties', 'seeflight.filters', 'seeflight.directives'])
 
-.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+.config(function($httpProvider, $urlRouterProvider, $stateProvider) {  
 
-  $httpProvider.interceptors.push('httpInterceptor');
+    $urlRouterProvider.otherwise('/search');
+    //$httpProvider.interceptors.push('httpInterceptor');
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
-
-  // setup an abstract state for the tabs directive
-    .state('index', {
-    url: '/search',
-    controller: 'SearchController',
-    templateUrl: 'templates/search.html'
-  })
-
-
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/search');
+    $stateProvider
+    .state('home', {
+      url: '/home',
+      controller: 'HomeController',
+      templateUrl: 'templates/home.html'
+    })
+    .state('search', {
+      url: '/search',
+      controller: 'SearchController',
+      templateUrl: 'templates/search.html'
+    });
 
 });
 
@@ -27,3 +23,5 @@ angular.module('seeflight.controllers', []);
 angular.module('seeflight.interceptors', []);
 angular.module('seeflight.services', []);
 angular.module('seeflight.properties', []);
+angular.module('seeflight.filters', []);
+angular.module('seeflight.directives', []);

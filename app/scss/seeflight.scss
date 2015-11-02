@@ -1,0 +1,11 @@
+$max-margin : 5;
+
+@mixin make-margin($margin) {
+	@for $i from 0 through $margin {
+		.margin-top-#{$i} {
+		  margin-top: 10px * $i;
+		}
+	}
+}
+
+@include make-margin($max-margin);

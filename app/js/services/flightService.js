@@ -1,6 +1,6 @@
-angular.module('tidybear.services')
+angular.module('seeflight.services')
 
-.factory('Reservation', function($http, properties) {
+.factory('Flight', function($http, properties) {
   return {
     getAllFlights: function(search) {
       var config = {
@@ -14,4 +14,4 @@ angular.module('tidybear.services')
       });
     }
   }
-};
+});

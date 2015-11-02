@@ -7,20 +7,22 @@
 
 
     <!-- compiled css output -->
-    <link href="css/style.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bower_components/flat-ui-pro/dist/css/flat-ui-pro.min.css" rel="stylesheet">
+    <link href="css/seeflight.min.css" rel="stylesheet">
 
 
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="bower_components/flat-ui-pro/dist/js/flat-ui-pro.min.js"></script>
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
     
   </head>
   <body ng-app="seeflight">
-
+    <div ui-view></div>
   </body>
 </html>
