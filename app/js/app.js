@@ -51,6 +51,7 @@ angular.module('seeflight.controllers')
 		maxPrice : 2000,
 		daysBeforeDepart : [0, 5, 10],
 		showSpecificDepartureArray : false,
+		isLoading : false,
 		specificDepartureArray : createArray(properties.MAX_DAYS_BEFORE_DEPARTURE),
 		daysInDestination : {
 			array : createArray(properties.MAX_DAYS_IN_DESTINATION),
@@ -62,7 +63,9 @@ angular.module('seeflight.controllers')
 	};
 
 	$scope.search = function(search){
+		$scope.settings.isLoading = true;
 		Flight.getAllFlights(search).then(function(response){
+		  $scope.settings.isLoading = false;
 		  if(response.data){
 		    $scope.response = response.data;
 		    $scope.settings.dataMaxPrice = Math.ceil(Math.max.apply(Math, $scope.response.flights.map(function(o){return o.lowestFare;})));

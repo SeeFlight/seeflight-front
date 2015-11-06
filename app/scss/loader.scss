@@ -1,0 +1,68 @@
+#wrapper {
+  display:table;
+  height:100%;
+  width:100%;
+}
+
+.spinner-wrapper {
+  text-align:center;
+  display:table-cell;
+  vertical-align:middle;
+}
+
+#spinner-two {
+  transform:rotate(90deg) scale(.3);
+  transform-origin:center center;
+  circle {
+    fill:transparent;
+    stroke:rgba(0,0,0,.5);
+    stroke-width:0;
+    transform-origin:center center;
+    &#fourth {
+      animation:strokePulse 1.8s infinite;
+    }
+    &#fifth {
+      animation:strokePulse 1.8s .6s infinite;
+    }
+    &#sixth {
+      animation:strokePulse 1.8s 1.2s infinite;
+    }
+  }
+}
+
+@keyframes spin-one {
+  0% {
+    stroke-dasharray:628 5000;
+  }
+  50% {
+    stroke-dasharray:0 5000;
+  }
+  100% {
+    stroke-dasharray:0 5000;
+  }
+}
+
+@keyframes spin-two {
+  0% {
+    stroke-dasharray:0 5000;
+  }
+  50% {
+    stroke-dasharray:0 5000;
+  }
+  100% {
+    stroke-dasharray:628 5000;
+  }
+}
+
+@keyframes strokePulse {
+  0% {
+    stroke-width:40;
+    transform:scale(.01);
+    stroke:rgba(26,188,156,.8);
+  }
+  100% {
+    stroke-width:0;
+    transform:scale(1.2);
+    stroke:rgba(17,121,100,.3);
+  }
+}

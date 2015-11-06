@@ -3,5 +3,5 @@
  */
 
 exports.getPage = function(req, res){
-	res.render('search.html');
+	res.render('faq.html');
 };

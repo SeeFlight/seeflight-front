@@ -29,7 +29,7 @@ module.exports = function() {
 	var app = express();
 	app.use(bodyParser.json());
 
-	app.set('views', __dirname + '/../app');
+	app.set('views', __dirname + '/../app/views');
 	app.engine('html', ejs.renderFile);
 	app.engine('js', ejs.renderFile);
 	app.set('view engine', 'ejs');
@@ -55,7 +55,11 @@ module.exports = function() {
 	.use('/js', express.static(__dirname + '/../app/js')) 
 	.use('/bower_components', express.static(__dirname + '/../app/bower_components')) 
 	.use('/fonts', express.static(__dirname + '/../app/fonts'))
-	.use('/images', express.static(__dirname + '/../app/images'));
+	.use('/images', express.static(__dirname + '/../app/images'))
+	.use('/vendor', express.static(__dirname + '/../app/vendor'))
+	.use(function(req, res, next){
+		res.render('index.html');
+	});
 	
 	// Return Express server instance
 	return app;
