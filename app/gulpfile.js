@@ -5,12 +5,12 @@ var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 
 var paths = {
-  sass: ['./scss/**/*.scss'],
+  sass: ['./scss/**/*.scss', './scss/**/*.css'],
   angularjs: ['./js/**/*.js']
 };
 
 gulp.task('sass', function() {
-  gulp.src(paths.sass)
+  return gulp.src(paths.sass)
     .pipe(sass({
       errLogToConsole: true
     }))

@@ -7,69 +7,70 @@
 			<div class="form-group">
 				<input type="text" class="form-control" placeholder="TO" ng-model="search.destination">
 			</div>
+			<button class="btn btn-block btn-lg btn-primary" ng-click="search(search)">Search</button>
 		</form>
-		<button class="btn btn-block btn-lg btn-primary" ng-click="search(search)">Search</button>
 	</div>
-	<div>
-		<p>Maximum price {{settings.maxPrice}}</p>
-		<slider class="margin-top-2" value="settings.maxPrice" min="settings.dataMinPrice" max="settings.dataMaxPrice" orientation="horizontal" range="min"/>
-	</div>
-	<div>
-		<p>Days in destination</p>
-		<label class="checkbox" for="checkbox1">
-	      <input type="checkbox" checked="checked" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.firstChbx = !settings.daysInDestination.firstChbx; manageDaysInDestination(settings.daysInDestination.firstChbx, 1, 3)">
-	      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-	      1 to 3 days
-	    </label>
-	    <label class="checkbox" for="checkbox2">
-	      <input type="checkbox" checked="checked" value="" id="checkbox2" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.secondChbx = !settings.daysInDestination.secondChbx; manageDaysInDestination(settings.daysInDestination.secondChbx, 4, 7)">
-	      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-	      4 to 7 days
-	    </label>
-	    <label class="checkbox" for="checkbox3">
-	      <input type="checkbox" checked="checked" value="" id="checkbox3" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.thirdChbx = !settings.daysInDestination.thirdChbx; manageDaysInDestination(settings.daysInDestination.thirdChbx, 8, 11)">
-	      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-	      8 to 11 days
-	    </label>
-	    <label class="checkbox" for="checkbox4">
-	      <input type="checkbox" checked="checked" value="" id="checkbox4" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.fourthChbx = !settings.daysInDestination.fourthChbx; manageDaysInDestination(settings.daysInDestination.fourthChbx, 12, 15)">
-	      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
-	      12 to 15 days
-	    </label>
-	</div>
-	<div>
-		<p>Specific departure date</p>
-		<datepicker value="settings.specificDepartureDate" fieldid="date-picker" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepicker>
+	<div class="customization margin-top-2">
+		<div>
+			<p>Maximum price {{settings.maxPrice}}</p>
+			<slider class="margin-top-2" value="settings.maxPrice" min="settings.dataMinPrice" max="settings.dataMaxPrice" orientation="horizontal" range="min"/>
+		</div>
+		<div>
+			<p>Days in destination</p>
+			<label class="checkbox" for="checkbox1">
+		      <input type="checkbox" checked="checked" value="" id="checkbox1" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.firstChbx = !settings.daysInDestination.firstChbx; manageDaysInDestination(settings.daysInDestination.firstChbx, 1, 3)">
+		      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+		      1 to 3 days
+		    </label>
+		    <label class="checkbox" for="checkbox2">
+		      <input type="checkbox" checked="checked" value="" id="checkbox2" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.secondChbx = !settings.daysInDestination.secondChbx; manageDaysInDestination(settings.daysInDestination.secondChbx, 4, 7)">
+		      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+		      4 to 7 days
+		    </label>
+		    <label class="checkbox" for="checkbox3">
+		      <input type="checkbox" checked="checked" value="" id="checkbox3" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.thirdChbx = !settings.daysInDestination.thirdChbx; manageDaysInDestination(settings.daysInDestination.thirdChbx, 8, 11)">
+		      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+		      8 to 11 days
+		    </label>
+		    <label class="checkbox" for="checkbox4">
+		      <input type="checkbox" checked="checked" value="" id="checkbox4" data-toggle="checkbox" class="custom-checkbox" ng-click="settings.daysInDestination.fourthChbx = !settings.daysInDestination.fourthChbx; manageDaysInDestination(settings.daysInDestination.fourthChbx, 12, 15)">
+		      <span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>
+		      12 to 15 days
+		    </label>
+		</div>
+		<div>
+			<p>Specific departure date</p>
+			<datepicker value="settings.specificDepartureDate" fieldid="date-picker" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepicker>
+		</div>
 	</div>
 </div>
 <div class="col-sm-10 margin-top-2">
-	<div class="btn-toolbar row">
-		<div class="btn-group col-sm-12">
-		  <button class="btn btn-primary col-sm-4 active">Depart in 1-5 days</button>
-		  <button class="btn btn-primary col-sm-4">Depart in 6-10 days</button>
-		  <button class="btn btn-primary col-sm-4">Depart in 11-15 days</button>
+	<div class="row header-depart-dates">
+		<div class="col-sm-12">
+			<ul class="nav nav-pills text-center">
+			  <li class="col-sm-4">Depart in 1-5 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></li>
+			  <li class="col-sm-4">Depart in 6-10 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></li>
+			  <li class="col-sm-4">Depart in 11-15 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></li>
+			</ul>
 		</div>
 	</div>
-	<div class="row">
-		<div class="col-sm-4">
-			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : 0:5:settings.specificDepartureDate | daysInDestinationFilter: settings.daysInDestination.array | orderBy:'lowestFare'">
-				<p>{{::flight.lowestFare}}</p>
-				<p>Depart in {{::flight.daysToDeparture}} days</p>
-				<p>Returns in {{::flight.daysToReturn}} days</p>
-			</div>
+	<div class="row header-specific-dates margin-top-1" ng-hide="settings.showSpecificDepartureArray == false">
+		<div class="col-sm-4 text-center" ng-repeat="i in settings.daysBeforeDepart track by $index" ng-init="outerIndex = $index">
+			<ul class="text-center">
+			  <li ng-class="{'active': settings.specificDepartureArray.indexOf(outerIndex * [].constructor(5).length + $index + 1) > -1}" ng-click="handleSpecificDepartureDate(outerIndex * [].constructor(5).length + $index + 1)" ng-repeat="j in [].constructor(5) track by $index">{{outerIndex * [].constructor(5).length + $index + 1}}</li>
+			</ul>
 		</div>
-		<div class="col-sm-4">
-			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : 5:10:settings.specificDepartureDate | daysInDestinationFilter: settings.daysInDestination.array | orderBy:'lowestFare'">
-				<p>{{::flight.lowestFare}}</p>
-				<p>Depart in {{::flight.daysToDeparture}} days</p>
-				<p>Returns in {{::flight.daysToReturn}} days</p>
-			</div>
-		</div>
-		<div class="col-sm-4">
-			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : 10:15:settings.specificDepartureDate | daysInDestinationFilter: settings.daysInDestination.array | orderBy:'lowestFare'">
-				<p>{{::flight.lowestFare}}</p>
-				<p>Depart in {{::flight.daysToDeparture}} days</p>
-				<p>Returns in {{::flight.daysToReturn}} days</p>
+	</div>
+	<div class="row margin-top-2">
+		<div class="col-sm-4" ng-repeat="i in settings.daysBeforeDepart track by $index">
+			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | orderBy:'lowestFare'">
+				<div class="col-xs-6">
+					<p>Depart in {{::flight.daysToDeparture}} {{::flight.daysToDeparture == 1 ? "day" : "days"}}</p>
+					<p>Returns in {{::flight.daysToReturn}} days</p>
+				</div>
+				<div class="col-xs-6 text-right">
+					<p>{{::flight.lowestFare}}</p>
+				</div>
 			</div>
 		</div>
 	</div>

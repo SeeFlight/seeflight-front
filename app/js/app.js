@@ -12,7 +12,7 @@ var module = angular.module('seeflight', ['ui.router', 'seeflight.controllers', 
       templateUrl: 'templates/home.html'
     })
     .state('search', {
-      url: '/search',
+      url: '/search?origin&destination',
       controller: 'SearchController',
       templateUrl: 'templates/search.html'
     });
@@ -29,16 +29,19 @@ angular.module('seeflight.properties')
 
 .constant('properties', (function() {
   var distantHost = 'http://localhost:3000/';
-  var maxDaysInDestinaton = 15;
+  var maxDaysInDestination = 15;
+  var maxDaysBeforeDeparture = 15;
 
   return {
     DISTANT_HOST: distantHost,
-    MAX_DAYS_IN_DESTINATION : maxDaysInDestinaton
+    MAX_DAYS_IN_DESTINATION : maxDaysInDestination,
+    MAX_DAYS_BEFORE_DEPARTURE : maxDaysBeforeDeparture
   }
 })());
 angular.module('seeflight.controllers')
 
-.controller('SearchController', function($scope, $state, Flight, properties){
+.controller('SearchController', function($scope, $state, $stateParams, Flight, properties){
+
 	$scope.response = {
 		flights : []
 	};
@@ -46,6 +49,9 @@ angular.module('seeflight.controllers')
 		dataMinPrice : 0,
 		dataMaxPrice : 2000,
 		maxPrice : 2000,
+		daysBeforeDepart : [0, 5, 10],
+		showSpecificDepartureArray : false,
+		specificDepartureArray : createArray(properties.MAX_DAYS_BEFORE_DEPARTURE),
 		daysInDestination : {
 			array : createArray(properties.MAX_DAYS_IN_DESTINATION),
 			firstChbx : true,
@@ -83,6 +89,32 @@ angular.module('seeflight.controllers')
 		}
 	};
 
+	$scope.handleSpecificDepartureDate = function(daysBeforeDepart){
+		var found = false;
+		var i = 0;
+		while(!found && i<$scope.settings.specificDepartureArray.length){
+			if($scope.settings.specificDepartureArray[i] === daysBeforeDepart){
+				found = true;
+			}
+			i++;
+		}
+		if(!found){
+			$scope.settings.specificDepartureArray.push(daysBeforeDepart);
+		}else{
+			$scope.settings.specificDepartureArray.splice(i-1, 1);
+		}
+	};
+
+
+	if($stateParams.origin && $stateParams.destination){
+		$scope.search.origin = $stateParams.origin;
+		$scope.search.destination = $stateParams.destination;
+		$scope.search({
+			origin : $stateParams.origin, 
+			destination : $stateParams.destination
+		});
+	}
+
 	function createArray(n){
 		var array = [];
 		for (var i = 1; i <= n; i++) {
@@ -94,14 +126,20 @@ angular.module('seeflight.controllers')
 angular.module('seeflight.filters')
 
 .filter("departureFilter", function() {
-	return function(flights, minDays, maxDays, specificDepartureDate) {
+	return function(flights, minDays, maxDays, specificDepartureDate, specificDepartureArray) {
 		var out = [];
 		if(specificDepartureDate){
 			for (var i = 0; i < flights.length; i++){
-			  if(flights[i].departureDate === specificDepartureDate){
-			      out.push(flights[i]);
+			  if(flights[i].departureDate === specificDepartureDate && flights[i].daysToDeparture > minDays && flights[i].daysToDeparture <= maxDays){
+				out.push(flights[i]);
 			  }
 			}    
+		}else if(specificDepartureArray){
+			for (var i = 0; i < flights.length; i++){
+				if(specificDepartureArray.indexOf(flights[i].daysToDeparture) > -1 && flights[i].daysToDeparture > minDays && flights[i].daysToDeparture <= maxDays){
+					out.push(flights[i]);
+				}
+			}
 		}else{
 			for (var i = 0; i < flights.length; i++){
 			  if(flights[i].daysToDeparture > minDays && flights[i].daysToDeparture <= maxDays){

@@ -12,7 +12,7 @@ var module = angular.module('seeflight', ['ui.router', 'seeflight.controllers', 
       templateUrl: 'templates/home.html'
     })
     .state('search', {
-      url: '/search',
+      url: '/search?origin&destination',
       controller: 'SearchController',
       templateUrl: 'templates/search.html'
     });
