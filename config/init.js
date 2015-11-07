@@ -56,7 +56,7 @@ module.exports = function() {
 	.use('/bower_components', express.static(__dirname + '/../app/bower_components')) 
 	.use('/fonts', express.static(__dirname + '/../app/fonts'))
 	.use('/images', express.static(__dirname + '/../app/images'))
-	.use('/vendor', express.static(__dirname + '/../app/vendor'));
+	.use('/vendor', express.static(__dirname + '/../app/vendor'))
 	.use(function(req, res, next){
 		res.render('index.html');
 	});
