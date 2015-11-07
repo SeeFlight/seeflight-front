@@ -1,7 +1,7 @@
 angular.module('seeflight.properties')
 
 .constant('properties', (function() {
-  var distantHost = 'http://localhost:3000/';
+  var distantHost = 'http://localhost:8080/';
   var maxDaysInDestination = 15;
   var maxDaysBeforeDeparture = 15;
 
