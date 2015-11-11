@@ -26,6 +26,22 @@ angular.module('seeflight.filters')
 	};
 })
 
+.filter("returnFilter", function() {
+	return function(flights, specificReturnDate) {
+		var out = [];
+		if(specificReturnDate){
+			for (var i = 0; i < flights.length; i++){
+			  if(flights[i].returnDate === specificReturnDate){
+				out.push(flights[i]);
+			  }
+			}    
+		}else{
+			out.push.apply(out, flights);
+		}  
+		return out;
+	};
+})
+
 .filter("priceFilter", function() {
 	return function(flights, maxPrice) {
 		var out = [];

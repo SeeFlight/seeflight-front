@@ -40,7 +40,11 @@
 		</div>
 		<div>
 			<p>Specific departure date</p>
-			<datepicker value="settings.specificDepartureDate" fieldid="date-picker" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepicker>
+			<datepickerdeparture value="settings.specificDepartureDate" fieldid="date-picker" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepickerDeparture>
+		</div>
+		<div>
+			<p>Specific return date</p>
+			<datepickerreturn value="settings.specificReturnDate" fieldid="date-picker-return" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepickerReturn>
 		</div>
 	</div>
 </div>
@@ -48,9 +52,9 @@
 	<div class="row header-depart-dates">
 		<div class="col-sm-12">
 			<ul class="nav nav-pills text-center">
-			  <li class="col-sm-4">Depart in 1-5 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></li>
-			  <li class="col-sm-4">Depart in 6-10 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></li>
-			  <li class="col-sm-4">Depart in 11-15 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></li>
+			  <li class="col-sm-4"><div>Depart in 1-5 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></div></li>
+			  <li class="col-sm-4"><div>Depart in 6-10 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></div></li>
+			  <li class="col-sm-4"><div>Depart in 11-15 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></div></li>
 			</ul>
 		</div>
 	</div>
@@ -61,7 +65,7 @@
 			</ul>
 		</div>
 	</div>
-	<div class="row margin-top-2">
+	<div class="row">
 		<div id="wrapper" ng-show="settings.isLoading">
 		  <div class="spinner-wrapper">
 		    <svg width="300" height="300" id="spinner-two" fill="none">
@@ -71,14 +75,30 @@
 		    </svg>
 		  </div>  
 		</div>
-		<div ng-show="!settings.isLoading" class="col-sm-4" ng-repeat="i in settings.daysBeforeDepart track by $index">
-			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | orderBy:'lowestFare'">
-				<div class="col-xs-6">
-					<p>Depart in {{::flight.daysToDeparture}} {{::flight.daysToDeparture == 1 ? "day" : "days"}}</p>
-					<p>Returns in {{::flight.daysToReturn}} days</p>
+		<div ng-show="!settings.isLoading" class="col-sm-4 flights-column" ng-repeat="i in settings.daysBeforeDepart track by $index">
+			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'">
+				<div class="row">
+					<div class="col-xs-6">
+						<p><strong>Depart in <span class="days">{{::flight.daysToDeparture}}</span> {{::flight.daysToDeparture == 1 ? "day" : "days"}}</strong><br>
+							<span class="formated-date">{{::flight.departureFormatedDate}}</span>
+						</p>
+						<p><strong>Returns in <span class="days">{{::flight.daysToReturn}}</span> {{::flight.daysToReturn == 1 ? "day" : "days"}}</strong><br>
+							<span class="formated-date">{{::flight.returnFormatedDate}}</span>
+						</p>
+					</div>
+					<div class="col-xs-6 text-center">
+						<p class="h4 margin-top-2">
+							<span ng-repeat="number in getPriceArray(flight) track by $index" class="price">{{::number}}</span>
+						</p>
+						<p class="margin-top-2"><span class="days-in-destination"><strong>{{::flight.lengthOfStay}}</strong></span><br>
+							{{::flight.lengthOfStay == 1 ? "day" : "days"}} in destination
+						</p>
+					</div>
 				</div>
-				<div class="col-xs-6 text-right">
-					<p>{{::flight.lowestFare}}</p>
+				<div class="row airline-code">
+					<div class="col-xs-12 text-center">
+						<p>{{::flight.airlineCode}}</p>
+					</div>
 				</div>
 			</div>
 		</div>

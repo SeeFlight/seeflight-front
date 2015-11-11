@@ -1,9 +1,20 @@
 $max-margin : 10;
 $light-color : #ECF0F1;
+$lighter-color : #f5f7f8;
+$box-shadow-color : #adafb3;
 $primary-color : #1abc9c;
 $primary-border-color : #16a085;
 $secondary-border-color : #bdc3c7;
 $primary-font-color : white;
+$dark-color : #34495E;
+$yellow-color : #F1C40F;
+$dark-grey : #7F8C8D;
+$orange-color : #F39C12;
+
+.zero-padding{
+    padding-left : 0;
+    padding-right : 0;
+}
 
 @mixin make-margin($margin) {
 	@for $i from 0 through $margin {
@@ -16,29 +27,73 @@ $primary-font-color : white;
 @include make-margin($max-margin);
 
 .flight-list{
-	background-color: $light-color;
-    border-top: 2px solid $primary-border-color;
+    display: inline-block;
+    width: 100%;
+    border: 1px solid $secondary-border-color;
+    -webkit-transition: box-shadow 1000ms ease;
+    transition: box-shadow 1000ms ease;
+    margin-top : 10px;
+    border-radius : 6px;
 
-	&:first-child{
-		border-top: none;
-   		border-radius: 6px 6px 0 0;
+    &:hover{
+        border: 1px solid $primary-color;
+        box-shadow: $box-shadow-color 0px 0px 6px -1px;
+        -webkit-transition: background-color 250ms ease;
+        transition: background-color 250ms ease;
+        cursor : pointer;
+        background-color : $lighter-color;
     }
+    .days-in-destination{
+        border : 1px solid $primary-color;
+        padding : 5px;
+        border-radius : 6px;
+        color : $dark-grey;
+    }
+    .formated-date{
+        font-size : 16px;
+        color : $box-shadow-color;
+    }
+    .days{
+        color : $primary-color;
+    }
+    .airline-code{
+        border-top : 1px solid $light-color;
+        p{
+            margin:0px;
+        }
+    }
+    .price{
+        background-color : $dark-color;
+        color : $yellow-color;
+        padding : 3px;
+        border-left : 1px solid $light-color;
+        border-radius : 0px;
+    }
+    .price:first-child{
+        border-left : none;
+    }
+}
 
-    &:last-child{
-   		border-radius: 0 0 6px 6px;
-    }
+.flights-column{
+    padding-right : 5px;
+    padding-left : 10px;
 }
 
 .header-depart-dates{
     .nav-pills>li{
         background-color : $primary-color;
         color : $primary-font-color;
-        border-left: 2px solid $primary-border-color;
+        border : 1px solid #16A085;
+        border-left: 2px solid $light-color;
         padding: 12px 21px 13px;
         font-size: 16px;
         font-weight: 700;
         border-radius: 0;
         outline: 0;
+        -ms-transform: skew(-30deg); /* IE 9 */
+        -webkit-transform: skew(-30deg); /* Chrome, Safari, Opera */
+        transform: skew(-30deg); /* Standard syntax */
+        transform-origin: bottom left;
 
         &:first-child{
             border-left: none;
@@ -49,10 +104,18 @@ $primary-font-color : white;
             border-radius : 0 6px 6px 0;
         }
 
+        div{
+            -ms-transform: skew(30deg); /* IE 9 */
+            -webkit-transform: skew(30deg); /* Chrome, Safari, Opera */
+            transform: skew(30deg); /* Standard syntax */
+            transform-origin: bottom left;  
+        }
+
         .fui-triangle-down, .fui-triangle-up{
             cursor : pointer;
         }
     }
+
 }
 
 .header-specific-dates{

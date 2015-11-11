@@ -31,6 +31,12 @@ angular.module('seeflight.controllers')
 		    $scope.settings.dataMaxPrice = Math.ceil(Math.max.apply(Math, $scope.response.flights.map(function(o){return o.lowestFare;})));
 		    $scope.settings.dataMinPrice = Math.ceil(Math.min.apply(Math, $scope.response.flights.map(function(o){return o.lowestFare;})));
 		    $scope.settings.maxPrice = $scope.settings.dataMaxPrice;
+		    for(var i=0; i<$scope.response.flights.length; i++){
+		    	var flight = $scope.response.flights[i];
+		    	$scope.response.flights[i].departureFormatedDate = moment(parseInt(flight.departureDate)).format('D MMM YYYY');
+		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('D MMM YYYY');
+		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
+		    }
 		  }else{
 		    
 		  }
@@ -68,6 +74,15 @@ angular.module('seeflight.controllers')
 		}
 	};
 
+	$scope.getPriceArray = function(flight){
+		var currency = flight.currencyCode === "EUR" ? "€" : "$";
+		var price = flight.lowestFare;
+
+		var priceArray = [];
+		priceArray.push(currency);
+		priceArray.push.apply(priceArray, price.toString().split(""));
+		return priceArray;
+	}
 
 	if($stateParams.origin && $stateParams.destination){
 		$scope.search.origin = $stateParams.origin;
