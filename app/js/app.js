@@ -66,15 +66,15 @@ angular.module('seeflight.controllers')
 		$scope.settings.isLoading = true;
 		Flight.getAllFlights(search).then(function(response){
 		  $scope.settings.isLoading = false;
-		  if(response.data){
+		  if(response.status === 200){
 		    $scope.response = response.data;
 		    $scope.settings.dataMaxPrice = Math.ceil(Math.max.apply(Math, $scope.response.flights.map(function(o){return o.lowestFare;})));
 		    $scope.settings.dataMinPrice = Math.ceil(Math.min.apply(Math, $scope.response.flights.map(function(o){return o.lowestFare;})));
 		    $scope.settings.maxPrice = $scope.settings.dataMaxPrice;
 		    for(var i=0; i<$scope.response.flights.length; i++){
 		    	var flight = $scope.response.flights[i];
-		    	$scope.response.flights[i].departureFormatedDate = moment(parseInt(flight.departureDate)).format('D MMM YYYY');
-		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('D MMM YYYY');
+		    	$scope.response.flights[i].departureFormatedDate = moment(parseInt(flight.departureDate)).format('ddd. D MMM YYYY');
+		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
 		    }
 		  }else{
