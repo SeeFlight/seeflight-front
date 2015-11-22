@@ -40,11 +40,11 @@
 		</div>
 		<div>
 			<p>Specific departure date</p>
-			<datepickerdeparture value="settings.specificDepartureDate" fieldid="date-picker" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepickerDeparture>
+			<datepicker value="settings.specificDepartureDate" fieldid="date-picker-depart" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" mindate="{{settings.minDepartureDate}}" maxdate="{{settings.maxDepartureDate}}"></datepicker>
 		</div>
 		<div>
 			<p>Specific return date</p>
-			<datepickerreturn value="settings.specificReturnDate" fieldid="date-picker-return" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" maxdate="{{::settings.daysInDestination.array.length}}"></datepickerReturn>
+			<datepicker value="settings.specificReturnDate" fieldid="date-picker-return" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" mindate="{{settings.minReturnDate}}" maxdate="{{settings.maxReturnDate}}"></datepicker>
 		</div>
 	</div>
 </div>

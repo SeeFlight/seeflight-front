@@ -13,6 +13,10 @@ angular.module('seeflight.controllers')
 		showSpecificDepartureArray : false,
 		isLoading : false,
 		specificDepartureArray : createArray(properties.MAX_DAYS_BEFORE_DEPARTURE),
+		minDepartureDate : new Date().getTime()+24*60*60*1000,
+		maxDepartureDate : new Date().getTime()+properties.MAX_DAYS_IN_DESTINATION*24*60*60*1000,
+		minReturnDate : new Date().getTime()+2*24*60*60*1000,
+        maxReturnDate : new Date().getTime()+2*properties.MAX_DAYS_IN_DESTINATION*24*60*60*1000,
 		daysInDestination : {
 			array : createArray(properties.MAX_DAYS_IN_DESTINATION),
 			firstChbx : true,
