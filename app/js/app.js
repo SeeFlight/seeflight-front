@@ -40,7 +40,7 @@ angular.module('seeflight.properties')
 })());
 angular.module('seeflight.controllers')
 
-.controller('SearchController', function($scope, $state, $stateParams, Flight, properties){
+.controller('SearchController', function($scope, $state, $stateParams, Flight, properties, $window){
 
 	$scope.response = {
 		flights : []
@@ -82,7 +82,7 @@ angular.module('seeflight.controllers')
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
 		    }
 		  }else{
-		    
+		    $scope.response.flights = [];
 		  }
 		});
 	};
@@ -126,7 +126,21 @@ angular.module('seeflight.controllers')
 		priceArray.push(currency);
 		priceArray.push.apply(priceArray, price.toString().split(""));
 		return priceArray;
-	}
+	};
+
+	$scope.buyFlight = function(flight){
+		var url = 'http://www.ebookers.com/partner/offsitesearch?'
+		url += 'type=air&';
+		url += 'triptype=roundtrip&';
+		url += 'origin='+flight.origin;
+		url += '&dest='+flight.destination;
+		url += '&adults=1';
+		url += '&departdate='+moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
+		url += '&returndate='+moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
+		url += '&departspan=Anytime&returnspan=Anytime';
+
+		$window.open(url);
+	};
 
 	if($stateParams.origin && $stateParams.destination){
 		$scope.search.origin = $stateParams.origin;
