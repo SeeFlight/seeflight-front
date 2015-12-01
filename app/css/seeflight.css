@@ -38,7 +38,7 @@
 .flight-list {
   display: inline-block;
   width: 100%;
-  border: 1px solid #ededed;
+  border: 1px solid #bdc3c7;
   -webkit-transition: box-shadow 1000ms ease;
   transition: box-shadow 1000ms ease;
   margin-top: 10px;
@@ -140,6 +140,6 @@
     background: #1abc9c; }
 
 .customization {
-  border: 2px solid #ededed;
+  border: 2px solid #bdc3c7;
   border-radius: 6px;
   padding: 12px; }
