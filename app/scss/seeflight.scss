@@ -4,7 +4,7 @@ $lighter-color : #f5f7f8;
 $box-shadow-color : #adafb3;
 $primary-color : #1abc9c;
 $primary-border-color : #16a085;
-$secondary-border-color : #bdc3c7;
+$secondary-border-color : #ededed;
 $primary-font-color : white;
 $dark-color : #34495E;
 $yellow-color : #F1C40F;
@@ -36,12 +36,9 @@ $orange-color : #F39C12;
     border-radius : 6px;
 
     &:hover{
-        border: 1px solid $primary-color;
-        box-shadow: $box-shadow-color 0px 0px 6px -1px;
-        -webkit-transition: background-color 250ms ease;
-        transition: background-color 250ms ease;
+        border-color: #00c2a2;
+        box-shadow: #adafb3 0px 0px 6px -1px;
         cursor : pointer;
-        background-color : $lighter-color;
     }
     .days-in-destination{
         border : 1px solid $primary-color;

@@ -38,18 +38,15 @@
 .flight-list {
   display: inline-block;
   width: 100%;
-  border: 1px solid #bdc3c7;
+  border: 1px solid #ededed;
   -webkit-transition: box-shadow 1000ms ease;
   transition: box-shadow 1000ms ease;
   margin-top: 10px;
   border-radius: 6px; }
   .flight-list:hover {
-    border: 1px solid #1abc9c;
+    border-color: #00c2a2;
     box-shadow: #adafb3 0px 0px 6px -1px;
-    -webkit-transition: background-color 250ms ease;
-    transition: background-color 250ms ease;
-    cursor: pointer;
-    background-color: #f5f7f8; }
+    cursor: pointer; }
   .flight-list .days-in-destination {
     border: 1px solid #1abc9c;
     padding: 5px;
@@ -143,6 +140,6 @@
     background: #1abc9c; }
 
 .customization {
-  border: 2px solid #bdc3c7;
+  border: 2px solid #ededed;
   border-radius: 6px;
   padding: 12px; }
