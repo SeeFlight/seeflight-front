@@ -28,7 +28,7 @@ angular.module('seeflight.directives', []);
 angular.module('seeflight.properties')
 
 .constant('properties', (function() {
-  var distantHost = 'http://ec2-52-31-139-44.eu-west-1.compute.amazonaws.com:8080/';
+  var distantHost = 'http://localhost:8080/';
   var maxDaysInDestination = 15;
   var maxDaysBeforeDeparture = 15;
 
@@ -129,7 +129,22 @@ angular.module('seeflight.controllers')
 	};
 
 	$scope.buyFlight = function(flight){
-		var url = 'http://www.ebookers.com/partner/offsitesearch?'
+		var ebookersExtension;
+		switch(flight.pointOfSaleCountry){
+			case "GB" : 
+				ebookersExtension = "com";
+			break;
+			case "FR" : 
+				ebookersExtension = "fr"
+			break;
+			default :
+				ebookersExtension = "ie"
+			break; 
+		}
+
+		var url = 'http://www.ebookers.';
+		url += ebookersExtension;
+		url += '/partner/offsitesearch?'
 		url += 'type=air&';
 		url += 'triptype=roundtrip&';
 		url += 'origin='+flight.origin;

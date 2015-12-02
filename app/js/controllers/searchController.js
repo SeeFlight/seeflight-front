@@ -89,7 +89,22 @@ angular.module('seeflight.controllers')
 	};
 
 	$scope.buyFlight = function(flight){
-		var url = 'http://www.ebookers.com/partner/offsitesearch?'
+		var ebookersExtension;
+		switch(flight.pointOfSaleCountry){
+			case "GB" : 
+				ebookersExtension = "com";
+			break;
+			case "FR" : 
+				ebookersExtension = "fr"
+			break;
+			default :
+				ebookersExtension = "ie"
+			break; 
+		}
+
+		var url = 'http://www.ebookers.';
+		url += ebookersExtension;
+		url += '/partner/offsitesearch?'
 		url += 'type=air&';
 		url += 'triptype=roundtrip&';
 		url += 'origin='+flight.origin;
