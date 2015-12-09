@@ -1,7 +1,7 @@
 angular.module('seeflight.properties')
 
 .constant('properties', (function() {
-  var distantHost = 'http://ec2-52-31-139-44.eu-west-1.compute.amazonaws.com:8080/';
+  var distantHost = 'http://ec2-52-31-139-44.eu-west-1.compute.amazonaws.com:9090/';
   var maxDaysInDestination = 15;
   var maxDaysBeforeDeparture = 15;
 
