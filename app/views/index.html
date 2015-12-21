@@ -88,10 +88,10 @@
     <div class="w-form">
       <form class="mail" id="email-form" name="email-form" data-name="Email Form">
         <label class="from" for="CITY-2">FROM</label>
-        <input class="w-input from" id="CITY-2" type="text" placeholder=" CITY" name="FROM" data-name="FROM">
+        <input class="w-input from cities" id="CITY-2" type="text" placeholder=" CITY" name="FROM" data-name="FROM" id="origin">
         <label class="destination" for="CITY"><span>TO</span>
         </label>
-        <input class="w-input to" id="CITY" type="text" placeholder="CITY" name="TO" data-name="TO">
+        <input class="w-input to cities" id="CITY" type="text" placeholder="CITY" name="TO" data-name="TO" id="destination">
         <input class="w-button button" type="submit" value="ONE SEARCH" data-wait="Please wait...">
       </form>
     </div>
@@ -344,6 +344,7 @@
   </div>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script type="text/javascript" src="vendor/js/webflow.js"></script>
+  <script type="text/javascript" src="vendor/js/autocomplete.js"></script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>
 </html>
