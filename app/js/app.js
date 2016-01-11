@@ -40,7 +40,7 @@ angular.module('seeflight.properties')
 })());
 angular.module('seeflight.controllers')
 
-.controller('SearchController', function($scope, $state, $stateParams, Flight, properties, $window){
+.controller('SearchController', function($scope, $state, $stateParams, Flight, properties, Provider, $window){
 
 	$scope.response = {
 		flights : []
@@ -80,6 +80,11 @@ angular.module('seeflight.controllers')
 		    	$scope.response.flights[i].departureFormatedDate = moment(parseInt(flight.departureDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
+		    }
+		    for(var i=0; i<$scope.response.providers.length; i++){
+		    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id).then(function(resp){
+
+		    	});
 		    }
 		  }else{
 		    $scope.response.flights = [];
@@ -361,6 +366,23 @@ angular.module('seeflight.services')
       var config = {
         method : 'GET',
         url : properties.DISTANT_HOST+'flights?origin='+search.origin+'&destination='+search.destination
+      };
+      return $http(config).then(function(response) {
+        return response;
+      }, function(response) {
+        return response;
+      });
+    }
+  }
+});
+angular.module('seeflight.services')
+
+.factory('Provider', function($http, properties) {
+  return {
+    getProviderByName: function(provider, flightId) {
+      var config = {
+        method : 'GET',
+        url : properties.DISTANT_HOST+'providers?name='+provider+'&flightId='+flightId
       };
       return $http(config).then(function(response) {
         return response;
