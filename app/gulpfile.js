@@ -28,7 +28,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('build', function() {
-  if(process.env.ENV === 'dev' || process.env.ENV === 'prod'){
+  if(process.env.ENV === 'dev' || process.env.ENV === 'rec' || process.env.ENV === 'prod'){
     var paths = [
       './js/partialApp.js',
       './js/properties/'+process.env.ENV+'.js',

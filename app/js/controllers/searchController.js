@@ -1,6 +1,6 @@
 angular.module('seeflight.controllers')
 
-.controller('SearchController', function($scope, $state, $stateParams, Flight, properties, $window){
+.controller('SearchController', function($scope, $state, $stateParams, Flight, properties, Provider, $window){
 
 	$scope.response = {
 		flights : []
@@ -40,6 +40,11 @@ angular.module('seeflight.controllers')
 		    	$scope.response.flights[i].departureFormatedDate = moment(parseInt(flight.departureDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
+		    }
+		    for(var i=0; i<$scope.response.providers.length; i++){
+		    	Provider.getProviderByName($scope.response.providers[i]).then(function(resp){
+
+		    	});
 		    }
 		  }else{
 		    $scope.response.flights = [];
