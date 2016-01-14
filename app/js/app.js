@@ -28,7 +28,7 @@ angular.module('seeflight.directives', []);
 angular.module('seeflight.properties')
 
 .constant('properties', (function() {
-  var distantHost = 'http://localhost:8080/';
+  var distantHost = 'http://ec2-52-31-139-44.eu-west-1.compute.amazonaws.com:8080/';
   var maxDaysInDestination = 15;
   var maxDaysBeforeDeparture = 15;
 
@@ -82,9 +82,11 @@ angular.module('seeflight.controllers')
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
 		    }
 		    for(var i=0; i<$scope.response.providers.length; i++){
-		    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id).then(function(resp){
+		    	for(var j=0;j<10;j++){
+			    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id, $scope.response.flights[i]).then(function(resp){
 
-		    	});
+			    	});
+			    }
 		    }
 		  }else{
 		    $scope.response.flights = [];
@@ -379,10 +381,10 @@ angular.module('seeflight.services')
 
 .factory('Provider', function($http, properties) {
   return {
-    getProviderByName: function(provider, flightId) {
+    getProviderByName: function(provider, flightId, flight) {
       var config = {
         method : 'GET',
-        url : properties.DISTANT_HOST+'providers?name='+provider+'&flightId='+flightId
+        url : properties.DISTANT_HOST+'providers?name='+provider+'&flightId='+flightId+'&departureDate='+flight.departureDate+'&returnDate='+flight.returnDate
       };
       return $http(config).then(function(response) {
         return response;

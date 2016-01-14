@@ -42,9 +42,11 @@ angular.module('seeflight.controllers')
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
 		    }
 		    for(var i=0; i<$scope.response.providers.length; i++){
-		    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id).then(function(resp){
+		    	for(var j=0;j<10;j++){
+			    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id, $scope.response.flights[i]).then(function(resp){
 
-		    	});
+			    	});
+			    }
 		    }
 		  }else{
 		    $scope.response.flights = [];
