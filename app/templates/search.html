@@ -76,7 +76,7 @@
 		  </div>  
 		</div>
 		<div ng-show="!settings.isLoading" class="col-sm-4 flights-column" ng-repeat="i in settings.daysBeforeDepart track by $index">
-			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'">
+			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'" ng-click="buyFlight(flight)">
 				<div class="row">
 					<div class="col-xs-6">
 						<p><strong>Depart in <span class="days">{{::flight.daysToDeparture}}</span> {{::flight.daysToDeparture == 1 ? "day" : "days"}}</strong><br>

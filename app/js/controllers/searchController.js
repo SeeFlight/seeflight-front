@@ -41,13 +41,11 @@ angular.module('seeflight.controllers')
 		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
 		    }
-		    for(var i=0; i<$scope.response.providers.length; i++){
-		    	for(var j=0;j<10;j++){
-			    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id, $scope.response.flights[i]).then(function(resp){
+		    /*for(var i=0; i<$scope.response.providers.length; i++){
+		    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id, $scope.response.flights[0]).then(function(resp){
 
-			    	});
-			    }
-		    }
+		    	});
+		    }*/
 		  }else{
 		    $scope.response.flights = [];
 		  }
@@ -109,17 +107,24 @@ angular.module('seeflight.controllers')
 			break; 
 		}
 
-		var url = 'http://www.ebookers.';
-		url += ebookersExtension;
-		url += '/partner/offsitesearch?'
-		url += 'type=air&';
-		url += 'triptype=roundtrip&';
-		url += 'origin='+flight.origin;
-		url += '&dest='+flight.destination;
-		url += '&adults=1';
-		url += '&departdate='+moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
-		url += '&returndate='+moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
-		url += '&departspan=Anytime&returnspan=Anytime';
+		var url = 'http://www.govoyages.com/#/results/type=R;dep=';
+		url += moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
+		url += ';from=';
+		url += flight.origin;
+		url += ';to=';
+		url += flight.destination;
+		url += ';ret=';
+		url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
+		url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
+
+		$window.open(url);
+
+		url = 'http://www.gotogate.fr/air/';
+		url += flight.origin;
+		url += flight.destination;
+		url += moment(parseInt(flight.departureDate)).format('DDMMM');
+		url += moment(parseInt(flight.returnDate)).format('DDMMM');
+		url += '/1/-/-/c:Y?selectionKey=TK1858--V_TK3--V_TK4--W_TK1859--W%2C2i4v25%2Ca_L9.CD.MS.M3-b_9X-c_1-d_7e270&entrytype=metasearch&ext-tr=4ESG0Z0j04IOQWBvmoojog&ext-src=fr_web';
 
 		$window.open(url);
 	};
