@@ -146,8 +146,7 @@ angular.module('seeflight.controllers')
 				ebookersExtension = "ie"
 			break; 
 		}
-
-		var url = 'http://www.govoyages.com/#/results/type=R;dep=';
+		var url = 'http://tracking.publicidees.com/clic.php?progid=515&partid=47438&dpl=http://www.govoyages.com/?mktportal=publicidees&mktportal=publicidees&utm_source=publicidees&utm_medium=affiliates&utm_term=flight&utm_campaign=47438&utm_content=metasearch&#/results/type=R;dep=';
 		url += moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
 		url += ';from=';
 		url += flight.origin;
@@ -156,15 +155,6 @@ angular.module('seeflight.controllers')
 		url += ';ret=';
 		url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
 		url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
-
-		$window.open(url);
-
-		url = 'http://www.gotogate.fr/air/';
-		url += flight.origin;
-		url += flight.destination;
-		url += moment(parseInt(flight.departureDate)).format('DDMMM');
-		url += moment(parseInt(flight.returnDate)).format('DDMMM');
-		url += '/1/-/-/c:Y?selectionKey=TK1858--V_TK3--V_TK4--W_TK1859--W%2C2i4v25%2Ca_L9.CD.MS.M3-b_9X-c_1-d_7e270&entrytype=metasearch&ext-tr=4ESG0Z0j04IOQWBvmoojog&ext-src=fr_web';
 
 		$window.open(url);
 	};
