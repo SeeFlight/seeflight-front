@@ -34,7 +34,7 @@ gulp.task('build', function() {
       './js/properties/'+process.env.ENV+'.js',
       './js/controllers/*.js',
       './js/filters/*.js',
-      './js/directives/*.js',
+      './js/directives/**/*.js',
       './js/interceptors/*.js',
       './js/services/*.js'
     ];

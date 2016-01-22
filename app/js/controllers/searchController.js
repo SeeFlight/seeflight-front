@@ -94,27 +94,31 @@ angular.module('seeflight.controllers')
 	};
 
 	$scope.buyFlight = function(flight){
-		var ebookersExtension;
+		var url;
 		switch(flight.pointOfSaleCountry){
-			case "GB" : 
-				ebookersExtension = "com";
+			case "US" : 
+				url = 'http://www.dpbolvw.net/click-7889275-10581071?GOTO=EXPFLTWIZ&load=1&TripType=Roundtrip&FrAirport=';
+				url += flight.origin;
+				url += '&ToAirport=';
+				url += flight.destination;
+				url += '&FromDate=';
+				url += moment(parseInt(flight.departureDate)).format('MM/DD/YYYY');
+				url += '&ToDate=';
+				url += moment(parseInt(flight.returnDate)).format('MM/DD/YYYY');
+				url += '&NumAdult=1';
 			break;
-			case "FR" : 
-				ebookersExtension = "fr"
+			default : 
+				url = 'http://tracking.publicidees.com/clic.php?progid=515&partid=47438&dpl=http://www.govoyages.com/?mktportal=publicidees&mktportal=publicidees&utm_source=publicidees&utm_medium=affiliates&utm_term=flight&utm_campaign=47438&utm_content=metasearch&#/results/type=R;dep=';
+				url += moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
+				url += ';from=';
+				url += flight.origin;
+				url += ';to=';
+				url += flight.destination;
+				url += ';ret=';
+				url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
+				url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
 			break;
-			default :
-				ebookersExtension = "ie"
-			break; 
 		}
-		var url = 'http://tracking.publicidees.com/clic.php?progid=515&partid=47438&dpl=http://www.govoyages.com/?mktportal=publicidees&mktportal=publicidees&utm_source=publicidees&utm_medium=affiliates&utm_term=flight&utm_campaign=47438&utm_content=metasearch&#/results/type=R;dep=';
-		url += moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
-		url += ';from=';
-		url += flight.origin;
-		url += ';to=';
-		url += flight.destination;
-		url += ';ret=';
-		url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
-		url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
 
 		$window.open(url);
 	};
