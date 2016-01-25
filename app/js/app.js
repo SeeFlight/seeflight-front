@@ -124,7 +124,15 @@ angular.module('seeflight.controllers')
 	};
 
 	$scope.getPriceArray = function(flight){
-		var currency = flight.currencyCode === "EUR" ? "€" : "$";
+		var currency = '';
+		switch(flight.currencyCode){
+			case 'EUR' : currency = "€";
+			break;
+			case 'GBP' : currency = '£';
+			break;
+			default : currency = '$';
+			break;
+		}
 		var price = flight.lowestFare;
 
 		var priceArray = [];
@@ -135,31 +143,47 @@ angular.module('seeflight.controllers')
 
 	$scope.buyFlight = function(flight){
 		var url;
-		switch(flight.pointOfSaleCountry){
-			case "US" : 
-				url = 'http://www.dpbolvw.net/click-7889275-10581071?GOTO=EXPFLTWIZ&load=1&TripType=Roundtrip&FrAirport=';
-				url += flight.origin;
-				url += '&ToAirport=';
-				url += flight.destination;
-				url += '&FromDate=';
-				url += moment(parseInt(flight.departureDate)).format('MM/DD/YYYY');
-				url += '&ToDate=';
-				url += moment(parseInt(flight.returnDate)).format('MM/DD/YYYY');
-				url += '&NumAdult=1';
-			break;
-			default : 
-				url = 'http://tracking.publicidees.com/clic.php?progid=515&partid=47438&dpl=http://www.govoyages.com/?mktportal=publicidees&mktportal=publicidees&utm_source=publicidees&utm_medium=affiliates&utm_term=flight&utm_campaign=47438&utm_content=metasearch&#/results/type=R;dep=';
-				url += moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
-				url += ';from=';
-				url += flight.origin;
-				url += ';to=';
-				url += flight.destination;
-				url += ';ret=';
-				url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
-				url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
-			break;
+		if(flight.pointOfSaleCountry === 'US' && flight.pointOfSaleDestinationCountry === 'US'){
+			url = 'http://www.dpbolvw.net/click-7889275-10581071?GOTO=EXPFLTWIZ&load=1&TripType=Roundtrip&FrAirport=';
+			url += flight.origin;
+			url += '&ToAirport=';
+			url += flight.destination;
+			url += '&FromDate=';
+			url += moment(parseInt(flight.departureDate)).format('MM/DD/YYYY');
+			url += '&ToDate=';
+			url += moment(parseInt(flight.returnDate)).format('MM/DD/YYYY');
+			url += '&NumAdult=1';
+		}else if(flight.pointOfSaleCountry === 'GB'){				
+			url = 'http://www.tripsta.co.uk/airline-tickets/results?dep=('
+			url += flight.origin;
+			url += ')&arr=(';
+			url += flight.destination;
+			url += ')&isRoundtrip=1&obDate=';
+			url += moment(parseInt(flight.departureDate)).format('DD/MM/YYYY');
+			url += '&ibDate=';
+			url += moment(parseInt(flight.returnDate)).format('DD/MM/YYYY');
+			url += '&obTime=&ibTime=&extendedDates=0&resetStaticSearchResults=1&passengersAdult=1&passengersChild=0&passengersInfant=0&airlineCode=&class=&directFlightsOnly=0';
+		}else if(flight.pointOfSaleCountry === 'FR'){
+			url = 'http://tracking.publicidees.com/clic.php?progid=515&partid=47438&dpl=http://www.govoyages.com/?mktportal=publicidees&mktportal=publicidees&utm_source=publicidees&utm_medium=affiliates&utm_term=flight&utm_campaign=47438&utm_content=metasearch&#/results/type=R;dep=';
+			url += moment(parseInt(flight.departureDate)).format('YYYY-MM-DD');
+			url += ';from=';
+			url += flight.origin;
+			url += ';to=';
+			url += flight.destination;
+			url += ';ret=';
+			url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
+			url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
+		}else{
+			url = 'http://www.cheapoair.com/fpnext/Air/RemoteSearch/?tabid=1832&from=';
+			url += flight.origin;
+			url += '&to=';
+			url += flight.destination;
+			url += '&fromDt=';
+			url += moment(parseInt(flight.departureDate)).format('MM/DD/YYYY');
+			url += '&toDt=';
+			url += moment(parseInt(flight.returnDate)).format('MM/DD/YYYY');
+			url += '&rt=true&daan=&raan=&dst=&rst=&ad=1&se=0&ch=0&infl=0&infs=0&class=1&airpref=&preftyp=1&searchflxdt=false&IsNS=false&searchflxarpt=false&childAge=';
 		}
-
 		$window.open(url);
 	};
 
