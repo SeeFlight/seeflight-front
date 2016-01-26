@@ -932,11 +932,33 @@ a {
   clear: right;
   color: #00c2a2;
 }
-.mail {
-  padding-right: 200px;
-  padding-bottom: 50px;
-  padding-left: 210px;
+
+.mail{
+  margin-left : auto;
+  margin-right : auto;
 }
+@media (max-width: 678px) {
+  .mail{
+    width : 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+@media (min-width: 679px) and (max-width: 1200px) {
+  .mail{
+    width : 70%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+@media (min-width: 1201px) {
+  .mail{
+    width : 60%;
+    padding-right: 15px;
+    padding-left: 15px;
+  }
+}
+
 .to {
   color: #00c2a2;
 }

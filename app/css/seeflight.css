@@ -104,7 +104,7 @@
     transform: skew(30deg);
     /* Standard syntax */
     transform-origin: bottom left; }
-  .header-depart-dates .nav-pills > li .fui-triangle-down, .header-depart-dates .nav-pills > li .fui-triangle-up {
+  .header-depart-dates .nav-pills > li .fui-triangle-down, .header-depart-dates .nav-pills > li .fui-triangle-up, .header-depart-dates .nav-pills > li .fui-arrow-left, .header-depart-dates .nav-pills > li .fui-arrow-right {
     cursor: pointer; }
 
 .header-specific-dates ul {

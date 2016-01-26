@@ -39,7 +39,6 @@ angular.module('seeflight.directives')
                 showOtherMonths: $scope.showothermonths==="true",
                 selectOtherMonths: $scope.selectothermonths==="true",
                 dateFormat: $scope.dateformat,
-                yearRange: $scope.yearrange,
                 minDate: minDate,
                 maxDate: maxDate,
                 onSelect : function(dateText, instance){

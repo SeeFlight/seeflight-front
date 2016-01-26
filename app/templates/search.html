@@ -52,9 +52,18 @@
 	<div class="row header-depart-dates">
 		<div class="col-sm-12">
 			<ul class="nav nav-pills text-center">
-			  <li class="col-sm-4"><div>Depart in 1-5 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></div></li>
-			  <li class="col-sm-4"><div>Depart in 6-10 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></div></li>
-			  <li class="col-sm-4"><div>Depart in 11-15 days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span></div></li>
+			  <li class="col-sm-4" ng-class="settings.mobileState==0 ? '' : 'hidden-xs'">
+			  	<div>Depart in 1-5 days <span class="hidden-xs" ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span><span class="visible-xs fui-arrow-right pull-right" ng-click="settings.mobileState=1"></span>
+			  	</div>
+			  </li>
+			  <li class="col-sm-4" ng-class="settings.mobileState==1 ? '' : 'hidden-xs'">
+			  	<div><span class="visible-xs fui-arrow-left pull-left" ng-click="settings.mobileState=0"></span>Depart in 6-10 days <span class="hidden-xs" ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span><span class="visible-xs fui-arrow-right pull-right" ng-click="settings.mobileState=2"></span>
+			  	</div>
+			  </li>
+			  <li class="col-sm-4" ng-class="settings.mobileState==2 ? '' : 'hidden-xs'">
+			  	<div><span class="visible-xs fui-arrow-left pull-left" ng-click="settings.mobileState=1"></span>Depart in 11-15 days <span class="hidden-xs" ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span>
+			  	</div>
+			  </li>
 			</ul>
 		</div>
 	</div>
@@ -75,7 +84,7 @@
 		    </svg>
 		  </div>  
 		</div>
-		<div ng-show="!settings.isLoading" class="col-sm-4 flights-column" ng-repeat="i in settings.daysBeforeDepart track by $index">
+		<div ng-show="!settings.isLoading" ng-class="settings.mobileState==$index ? '' : 'hidden-xs'" class="col-sm-4 flights-column" ng-repeat="i in settings.daysBeforeDepart track by $index">
 			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'" ng-click="buyFlight(flight)">
 				<div class="row">
 					<div class="col-xs-6">

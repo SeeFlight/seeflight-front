@@ -23,7 +23,8 @@ angular.module('seeflight.controllers')
 			secondChbx : true,
 			thirdChbx : true,
 			fourthChbx : true
-		}
+		},
+		mobileState : 0
 	};
 
 	$scope.search = function(search){
@@ -132,7 +133,7 @@ angular.module('seeflight.controllers')
 			url += flight.destination;
 			url += ';ret=';
 			url += moment(parseInt(flight.returnDate)).format('YYYY-MM-DD');
-			url += ';collectionmethod=false;airlinescodes=false;internalSearch=true';
+			url += ';collectionmethod=false;airlinescodes=AF,IB,VY,UX,LH,KL,LX,SN,D8,UA,OS,SU,AA,AZ;internalSearch=true';
 		}else{
 			url = 'http://www.cheapoair.com/fpnext/Air/RemoteSearch/?tabid=1832&from=';
 			url += flight.origin;
