@@ -34,11 +34,13 @@ $orange-color : #F39C12;
     transition: box-shadow 1000ms ease;
     margin-top : 10px;
     border-radius : 6px;
+    color : $dark-color;
 
     &:hover{
         border-color: #00c2a2;
         box-shadow: #adafb3 0px 0px 6px -1px;
         cursor : pointer;
+        color : $dark-color;
     }
     .days-in-destination{
         border : 1px solid $primary-color;

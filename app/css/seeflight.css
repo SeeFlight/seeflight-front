@@ -42,11 +42,13 @@
   -webkit-transition: box-shadow 1000ms ease;
   transition: box-shadow 1000ms ease;
   margin-top: 10px;
-  border-radius: 6px; }
+  border-radius: 6px;
+  color: #34495E; }
   .flight-list:hover {
     border-color: #00c2a2;
     box-shadow: #adafb3 0px 0px 6px -1px;
-    cursor: pointer; }
+    cursor: pointer;
+    color: #34495E; }
   .flight-list .days-in-destination {
     border: 1px solid #1abc9c;
     padding: 5px;
