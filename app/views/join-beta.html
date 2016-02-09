@@ -20,7 +20,7 @@
         }
       });
   </script>
-  <script type="text/javascript" src="js/modernizr.js"></script>
+  <script type="text/javascript" src="vendor/js/modernizr.js"></script>
   <link rel="shortcut icon" type="image/x-icon" href="images/11733932_1639449622965142_124399694_o-2.jpg">
   <link rel="apple-touch-icon" href="images/6e6b428646098799a7e12fa23c049815.png">
   <script type="text/javascript">
@@ -82,11 +82,11 @@
       <h3 class="upper heading" data-ix="upper-heading">JOIN BETA</h3>
       <h1 data-ix="hero-headlng">see<strong> flight</strong></h1>
       <div class="w-form form-wrapper">
-        <form class="w-clearfix" id="email-form" name="email-form" data-name="Email Form">
-          <input class="w-input text-field-one-third" id="name" type="text" placeholder="Enter your name" name="name" data-name="Name" required="required">
-          <input class="w-input text-field-one-third" id="name-8" type="email" placeholder="Enter your email address" name="name-8" data-name="Name 8" required="required">
-          <input class="w-button button submit" type="submit" value="Submit" data-wait="Please wait...">
-        </form>
+        <div class="w-clearfix" id="email-form" name="email-form" data-name="Email Form">
+          <input class="w-input text-field-one-third beta-name" id="beta-name" type="text" placeholder="Enter your name" name="name" data-name="Name" required="required">
+          <input class="w-input text-field-one-third beta-mail" id="beta-mail" type="email" placeholder="Enter your email address" name="name-8" data-name="Name 8" required="required">
+          <input class="w-button button submit" type="submit" value="Submit" id="submit-beta" data-loading-text="Please wait..." data-wait="Please wait...">
+        </div>
         <div class="w-form-done success">
           <p class="success-text">Thank you! Your submission has been received!</p>
         </div>
@@ -123,7 +123,8 @@
     </div>
   </div>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script type="text/javascript" src="js/webflow.js"></script>
+  <script type="text/javascript" src="vendor/js/seeflight/seeflight.js"></script>
+  <script type="text/javascript" src="vendor/js/webflow.js"></script>
   <!--[if lte IE 9]><script src="https://cdnjs.cloudflare.com/ajax/libs/placeholders/3.0.2/placeholders.min.js"></script><![endif]-->
 </body>
 </html>

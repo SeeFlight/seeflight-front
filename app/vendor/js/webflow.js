@@ -993,8 +993,10 @@
 	      url = url.replace(("https://webflow.com"), ("http://formdata.webflow.com"));
 	    }
 
-	    document.location.href = "search#/search?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
+	    document.location.href = "join-beta?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
 	  }
+
+	
 
 	  // Submit form to MailChimp
 	  function submitMailChimp(data) {
@@ -1002,7 +1004,6 @@
 
 	    var form = data.form;
 	    var payload = {};
-
 	    // Skip Ajax submission if http/s mismatch, fallback to POST instead
 	    if (/^https/.test(loc.href) && !/^https/.test(data.action)) {
 	      form.attr('method', 'post');

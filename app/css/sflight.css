@@ -85,14 +85,11 @@ a {
 }
 .button {
   position: relative;
-  top: 5px;
-  right: -2px;
   display: inline-block;
   width: 171px;
   height: 45px;
   margin-top: 5px;
   margin-bottom: 0px;
-  margin-left: 30px;
   padding: 15px 42px 20px 39px;
   border-radius: 7px;
   background-color: #00c2a2;
@@ -772,17 +769,21 @@ a {
   text-shadow: none;
 }
 .text-field-one-third {
-  width: 32%;
   height: 50px;
-  margin-right: 18px;
   margin-bottom: 19px;
-  float: left;
   border-radius: 7px;
   box-shadow: none;
   font-family: Lato, sans-serif;
   color: #969799;
   font-size: 14px;
   font-weight: 300;
+  width: 45%;
+}
+.beta-name{
+  float: left;
+}
+.beta-mail{
+  float: right;
 }
 .text-field-one-third:hover {
   border: 1px solid #00c2a2;

@@ -19,7 +19,7 @@ var glob = require('glob');
 module.exports = function() {
 	// Initialize express app
 
-	if(process.env.ENV === 'dev' || process.env.ENV === 'prod'){
+	if(process.env.ENV === 'dev' || process.env.ENV === 'rec' || process.env.ENV === 'prod'){
 		console.log('Working in '+process.env.ENV+' environment');
 	}else{
 		process.env.ENV = 'dev';
