@@ -992,8 +992,13 @@
 	    if (retro && url.indexOf(("https://webflow.com")) >= 0) {
 	      url = url.replace(("https://webflow.com"), ("http://formdata.webflow.com"));
 	    }
-
-	    document.location.href = "join-beta?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
+	    var urlSearch;
+	    if(Cookies.get("seeflight_beta_test") && JSON.parse(Cookies.get("seeflight_beta_test")).isBeta === true){
+	    	urlSearch = "search#/search?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
+	    }else{
+	    	urlSearch = "join-beta?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
+	    }
+	    document.location.href = urlSearch;
 	  }
 
 	
