@@ -22,7 +22,7 @@ $('#submit-beta').click(function(){
 			statusCode: {
 				201: function (data) {
 				    var url = "search#/search?origin="+getParameterByName('origin')+"&destination="+getParameterByName('destination');
-				    Cookies.set("seeflight_beta_test", {isBeta:true}, { expires : 10 });
+				    Cookies.set("seeflight_beta_test", {isBeta:true}, { expires : 60 });
 				    document.location.href = url;
 				}
 			},
