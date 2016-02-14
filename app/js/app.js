@@ -30,7 +30,7 @@ angular.module('seeflight.properties')
 .constant('properties', (function() {
   var distantHost = 'http://localhost:8080/';
   var maxDaysInDestination = 15;
-  var maxDaysBeforeDeparture = 15;
+  var maxDaysBeforeDeparture = 45;
 
   return {
     DISTANT_HOST: distantHost,
@@ -49,14 +49,15 @@ angular.module('seeflight.controllers')
 		dataMinPrice : 0,
 		dataMaxPrice : 2000,
 		maxPrice : 2000,
-		daysBeforeDepart : [0, 5, 10],
+		daysBeforeDepart : [0, 5, 10, 15, 20, 25, 30, 35, 40],
+		maxColumnsDisplayed : 3,
 		showSpecificDepartureArray : false,
 		isLoading : false,
 		specificDepartureArray : createArray(properties.MAX_DAYS_BEFORE_DEPARTURE),
 		minDepartureDate : new Date().getTime()+24*60*60*1000,
-		maxDepartureDate : new Date().getTime()+properties.MAX_DAYS_IN_DESTINATION*24*60*60*1000,
+		maxDepartureDate : new Date().getTime()+properties.MAX_DAYS_BEFORE_DEPARTURE*24*60*60*1000,
 		minReturnDate : new Date().getTime()+2*24*60*60*1000,
-        maxReturnDate : new Date().getTime()+2*properties.MAX_DAYS_IN_DESTINATION*24*60*60*1000,
+        maxReturnDate : new Date().getTime()+(properties.MAX_DAYS_BEFORE_DEPARTURE+properties.MAX_DAYS_IN_DESTINATION)*24*60*60*1000,
 		daysInDestination : {
 			array : createArray(properties.MAX_DAYS_IN_DESTINATION),
 			firstChbx : true,
@@ -64,7 +65,8 @@ angular.module('seeflight.controllers')
 			thirdChbx : true,
 			fourthChbx : true
 		},
-		mobileState : 0
+		mobileState : 0,
+		desktopState : 0
 	};
 
 	$scope.search = function(search){
