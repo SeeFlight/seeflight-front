@@ -7,6 +7,7 @@ angular.module('seeflight.directives')
       replace: true,
       scope: {
           value: '=value',
+          settings : '=settings',
           dateformat: '@',
           showothermonths: '@',
           selectothermonths: '@',
@@ -45,6 +46,8 @@ angular.module('seeflight.directives')
                   var selectedDate = $('#'+$scope.fieldid).datepicker("getDate");
                   $scope.$apply(function () {
                     $scope.value = selectedDate.getTime().toString();
+                    $scope.settings.mobileState = Math.floor(Math.floor((selectedDate.getTime()-new Date().getTime())/60/60/24/1000)/5);
+                    $scope.settings.desktopState = Math.floor(Math.floor(Math.floor((selectedDate.getTime()-new Date().getTime())/60/60/24/1000)/5)/$scope.settings.maxColumnsDisplayed)*$scope.settings.maxColumnsDisplayed;
                   });
                   $('#cross-'+$scope.fieldid).removeClass('hidden');
                 }

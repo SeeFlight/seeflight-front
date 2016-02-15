@@ -40,11 +40,11 @@
 		</div>
 		<div>
 			<p>Specific departure date</p>
-			<datepicker value="settings.specificDepartureDate" fieldid="date-picker-depart" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" mindate="{{settings.minDepartureDate}}" maxdate="{{settings.maxDepartureDate}}"></datepicker>
+			<datepicker value="settings.specificDepartureDate" fieldid="date-picker-depart" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" mindate="{{settings.minDepartureDate}}" maxdate="{{settings.maxDepartureDate}}" settings="settings"></datepicker>
 		</div>
 		<div>
 			<p>Specific return date</p>
-			<datepicker value="settings.specificReturnDate" fieldid="date-picker-return" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" mindate="{{settings.minReturnDate}}" maxdate="{{settings.maxReturnDate}}"></datepicker>
+			<datepicker value="settings.specificReturnDate" fieldid="date-picker-return" dateformat="dd M yy" yearrange="-1:1" showothermonths="true" selectothermonths="true" mindate="{{settings.minReturnDate}}" maxdate="{{settings.maxReturnDate}}" settings="settings"></datepicker>
 		</div>
 	</div>
 </div>
@@ -66,7 +66,7 @@
 		</div>
 	</div>
 	<div class="row header-specific-dates margin-top-1" ng-hide="settings.showSpecificDepartureArray == false">
-		<div class="col-sm-4 text-center" ng-repeat="i in settings.daysBeforeDepart track by $index" ng-init="outerIndex = $index">
+		<div class="col-sm-4 text-center" ng-repeat="i in settings.daysBeforeDepart track by $index" ng-if="$index>=settings.desktopState && $index<settings.desktopState+settings.maxColumnsDisplayed" ng-init="outerIndex = $index">
 			<ul class="text-center">
 			  <li ng-class="{'active': settings.specificDepartureArray.indexOf(outerIndex * [].constructor(5).length + $index + 1) > -1}" ng-click="handleSpecificDepartureDate(outerIndex * [].constructor(5).length + $index + 1)" ng-repeat="j in [].constructor(5) track by $index">{{outerIndex * [].constructor(5).length + $index + 1}}</li>
 			</ul>
