@@ -1,6 +1,6 @@
 angular.module('seeflight.controllers')
 
-.controller('SearchController', function($scope, $state, $stateParams, Flight, properties, Provider, $window){
+.controller('SearchController', function($scope, $state, $stateParams, Search, properties, $window){
 
 	$scope.response = {
 		flights : []
@@ -26,12 +26,13 @@ angular.module('seeflight.controllers')
 			fourthChbx : true
 		},
 		mobileState : 0,
-		desktopState : 0
+		desktopState : 0,
+		currentPos : 0
 	};
 
 	$scope.search = function(search){
 		$scope.settings.isLoading = true;
-		Flight.getAllFlights(search).then(function(response){
+		Search.getSearch(search).then(function(response){
 		  $scope.settings.isLoading = false;
 		  if(response.status === 200){
 		    $scope.response = response.data;
@@ -42,13 +43,31 @@ angular.module('seeflight.controllers')
 		    	var flight = $scope.response.flights[i];
 		    	$scope.response.flights[i].departureFormatedDate = moment(parseInt(flight.departureDate)).format('ddd. D MMM YYYY');
 		    	$scope.response.flights[i].returnFormatedDate = moment(parseInt(flight.returnDate)).format('ddd. D MMM YYYY');
-		    	$scope.response.flights[i].lowestFare = Math.ceil(flight.lowestFare);
+		    	for(var k=0; k<$scope.response.providers.length; k++){
+			    	var found = false;
+			    	var j=0;
+			    	while(j<$scope.response.flights[i].prices.length && !found){
+			    		if($scope.response.flights[i].prices[j].provider === $scope.response.providers[k].name){
+			    			found = true;
+			    		}
+			    		j++;
+			    	}
+			    	if(!found){
+			    		var price = {
+			    			provider : $scope.response.providers[k].name
+			    		};
+			    		$scope.response.flights[i].prices.push(price);
+			    	}
+			    }
+				switch($scope.response.flights[i].currencyCode){
+					case 'EUR' : $scope.response.flights[i].currencyCode = "€";
+					break;
+					case 'GBP' : $scope.response.flights[i].currencyCode = '£';
+					break;
+					default : $scope.response.flights[i].currencyCode = '$';
+					break;
+				}
 		    }
-		    /*for(var i=0; i<$scope.response.providers.length; i++){
-		    	Provider.getProviderByName($scope.response.providers[i].name, $scope.response._id, $scope.response.flights[0]).then(function(resp){
-
-		    	});
-		    }*/
 		  }else{
 		    $scope.response.flights = [];
 		  }
@@ -87,19 +106,18 @@ angular.module('seeflight.controllers')
 	};
 
 	$scope.getPriceArray = function(flight){
-		var currency = '';
-		switch(flight.currencyCode){
-			case 'EUR' : currency = "€";
-			break;
-			case 'GBP' : currency = '£';
-			break;
-			default : currency = '$';
-			break;
-		}
 		var price = flight.lowestFare;
-
+		var deeplink = flight.deepLink;
+		for(var i=0; i<flight.prices.length; i++){
+			if(flight.prices[i].price<price){
+				price = flight.prices[i].price;
+				deeplink = flight.prices[i].deeplink;
+			}
+		}
+		flight.lowestFare = price;
+		flight.deepLink = deeplink;
 		var priceArray = [];
-		priceArray.push(currency);
+		priceArray.push(flight.currencyCode);
 		priceArray.push.apply(priceArray, price.toString().split(""));
 		return priceArray;
 	};
@@ -120,4 +138,39 @@ angular.module('seeflight.controllers')
 		}
 		return array;
 	}
+
+	$scope.updateFlightPrice = function(flight, isLoading){
+	    for(var i=0; i<$scope.response.providers.length; i++){
+	    	var found = false;
+	    	var j=0;
+	    	while(j<flight.prices.length && !found){
+	    		if(flight.prices[j].provider === $scope.response.providers[i].name){
+	    			found = true;
+	    		}
+	    		j++;
+	    	}
+	    	if(found && !flight.prices[j-1].price){
+		    	Search.getProviderByName($scope.response.providers[i].name, $scope.response._id, flight).then(function(resp){
+		    		isLoading = false;
+		    		if(resp.status === 200){
+		    			if(resp.data.price<flight.lowestFare){
+		    				flight.lowestFare = resp.data.price;
+		    				flight.deepLink = resp.data.deeplink;
+		    			}
+		    			flight.prices[j-1] = resp.data;
+		    		}
+		    	});
+	    	}
+	    }
+	};
+
+	$scope.checkUpdates = function(){
+		var pos = Math.floor($window.scrollY/$window.screen.availHeight);
+		if(pos > $scope.settings.currentPos){
+			$scope.settings.currentPos = pos;
+			for(var i=pos*properties.NB_FLIGHTS_DISPLAYED;i<(pos+1)*properties.NB_FLIGHTS_DISPLAYED;i++){
+				updateFlightPrice($scope.filteredFlights[i]);
+			}
+		}
+	};
 });

@@ -47,7 +47,6 @@
   .flight-list:hover {
     border-color: #00c2a2;
     box-shadow: #adafb3 0px 0px 6px -1px;
-    cursor: pointer;
     color: #34495E; }
   .flight-list .days-in-destination {
     border: 1px solid #1abc9c;
@@ -63,7 +62,14 @@
     border-top: 1px solid #ECF0F1; }
     .flight-list .airline-code p {
       margin: 0px; }
+  .flight-list .price-information p {
+    margin-bottom: 0; }
+  .flight-list .price-information .small {
+    font-size: 70%; }
+  .flight-list .price-information .btn {
+    padding: 5px 10px; }
   .flight-list .price {
+    cursor: pointer;
     background-color: #34495E;
     color: #F1C40F;
     padding: 3px;
@@ -145,3 +151,19 @@
   border: 2px solid #bdc3c7;
   border-radius: 6px;
   padding: 12px; }
+
+.glyphicon-refresh-animate {
+  animation: spin 0.7s infinite linear;
+  -webkit-animation: spin2 0.7s infinite linear; }
+
+@-webkit-keyframes spin2 {
+  from {
+    -webkit-transform: rotate(0deg); }
+  to {
+    -webkit-transform: rotate(360deg); } }
+
+@keyframes spin {
+  from {
+    transform: scale(1) rotate(0deg); }
+  to {
+    transform: scale(1) rotate(360deg); } }

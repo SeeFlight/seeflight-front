@@ -39,7 +39,6 @@ $orange-color : #F39C12;
     &:hover{
         border-color: #00c2a2;
         box-shadow: #adafb3 0px 0px 6px -1px;
-        cursor : pointer;
         color : $dark-color;
     }
     .days-in-destination{
@@ -61,7 +60,19 @@ $orange-color : #F39C12;
             margin:0px;
         }
     }
+    .price-information{
+        p{
+            margin-bottom : 0;
+        }
+        .small{
+            font-size : 70%;
+        }
+        .btn{
+            padding : 5px 10px;
+        }
+    }
     .price{
+        cursor : pointer;
         background-color : $dark-color;
         color : $yellow-color;
         padding : 3px;
@@ -163,4 +174,19 @@ $orange-color : #F39C12;
     border: 2px solid $secondary-border-color;
 	border-radius : 6px;
 	padding : 12px;
+}
+
+.glyphicon-refresh-animate {
+    animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
 }
