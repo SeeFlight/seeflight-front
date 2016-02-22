@@ -17,6 +17,7 @@
   <link rel="stylesheet" type="text/css" href="css/normalize.css">
   <link rel="stylesheet" type="text/css" href="css/webflow.css">
   <link rel="stylesheet" type="text/css" href="css/sflight.css">
+  <link rel="stylesheet" type="text/css" href="vendor/css/autocomplete.css">
   <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js"></script>
   <script>
     WebFont.load({
@@ -85,13 +86,13 @@
     </div>
     <h3 class="upper" data-ix="upper-heading">THE BEST FLIGHTS WITH LESS SEARCHES</h3>
     <h1 class="hero-heading" data-ix="hero-headlng">oNE&nbsp;<strong>SEARCH</strong>&nbsp;</h1>
-    <div class="w-form">
+    <div class="w-form" id="div-cities">
       <form class="mail" id="email-form" name="email-form" data-name="Email Form">
         <label class="from" for="CITY-2">FROM</label>
-        <input class="w-input from cities" id="CITY-2" type="text" placeholder=" CITY" name="FROM" data-name="FROM" id="origin">
+        <input class="w-input from cities" id="CITY-2" type="text" placeholder=" CITY" name="FROM" data-name="FROM" id="origin" autocomplete="off">
         <label class="destination" for="CITY"><span>TO</span>
         </label>
-        <input class="w-input to cities" id="CITY" type="text" placeholder="CITY" name="TO" data-name="TO" id="destination">
+        <input class="w-input to cities" id="CITY" type="text" placeholder="CITY" name="TO" data-name="TO" id="destination" autocomplete="off">
         <input class="w-button button" type="submit" value="ONE SEARCH" data-wait="Please wait...">
       </form>
     </div>

@@ -994,7 +994,7 @@
 	    }
 	    var urlSearch;
 	    if(Cookies.get("seeflight_beta_test") && JSON.parse(Cookies.get("seeflight_beta_test")).isBeta === true){
-	    	urlSearch = "search#/search?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
+	    	urlSearch = "search#/search?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO;
 	    }else{
 	    	urlSearch = "join-beta?origin="+payload.fields.FROM+"&destination="+payload.fields.TO;
 	    }

@@ -67,7 +67,8 @@
   .flight-list .price-information .small {
     font-size: 70%; }
   .flight-list .price-information .btn {
-    padding: 5px 10px; }
+    padding: 2px 4px;
+    font-size: 10px; }
   .flight-list .price {
     cursor: pointer;
     background-color: #34495E;
