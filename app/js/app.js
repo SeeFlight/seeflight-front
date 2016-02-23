@@ -42,6 +42,7 @@ angular.module('seeflight.controllers')
 	$scope.response = {
 		flights : []
 	};
+	$scope.totalFilteredFlights = {};
 	$scope.settings = {
 		dataMinPrice : 0,
 		dataMaxPrice : 2000,
@@ -176,7 +177,7 @@ angular.module('seeflight.controllers')
 		return array;
 	}
 
-	$scope.updateFlightPrice = function(flight, isLoading){
+	$scope.updateFlightPrice = function(flight){
 	    for(var i=0; i<$scope.response.providers.length; i++){
 	    	var found = false;
 	    	var j=0;
@@ -188,7 +189,7 @@ angular.module('seeflight.controllers')
 	    	}
 	    	if(found && !flight.prices[j-1].price){
 		    	Search.getProviderByName($scope.response.providers[i].name, $scope.response._id, flight).then(function(resp){
-		    		isLoading = false;
+		    		flight.isLoading = false;
 		    		if(resp.status === 200){
 		    			if(resp.data.price<flight.lowestFare){
 		    				flight.lowestFare = resp.data.price;
@@ -197,19 +198,25 @@ angular.module('seeflight.controllers')
 		    			flight.prices[j-1] = resp.data;
 		    		}
 		    	});
+	    	}else{
+	    		flight.isLoading = false;
 	    	}
 	    }
 	};
 
-	$scope.checkUpdates = function(){
-		var pos = Math.floor($window.scrollY/$window.screen.availHeight);
-		if(pos > $scope.settings.currentPos){
-			$scope.settings.currentPos = pos;
-			for(var i=pos*properties.NB_FLIGHTS_DISPLAYED;i<(pos+1)*properties.NB_FLIGHTS_DISPLAYED;i++){
-				updateFlightPrice($scope.filteredFlights[i]);
-			}
+	$scope.checkUpdates = function(flight){
+		if(flight.isLoading !== true){
+			flight.isLoading = true;
+			$scope.updateFlightPrice(flight);
 		}
 	};
+
+	$scope.addFilteredFlights = function(flights){
+		for(var i=0;i<flights.length;i++){
+			$scope.totalFilteredFlights[flights[i]._id] = flights[i];
+		}
+		return flights;
+	}
 });
 angular.module('seeflight.filters')
 
@@ -351,10 +358,15 @@ angular.module('seeflight.directives')
   return {
       restrict: 'A',
       scope: {
-          callback: '&'
+          callback: '&',
+          flight:'='
       },
       link: function ($scope, element, attrs) {
-        angular.element($window).bind("scroll", $scope.callback());
+        angular.element($window).bind("scroll", function(){
+    		if($window.scrollY+$window.screen.availHeight>element[0].offsetTop){
+        		$scope.callback($scope.flight);
+    		}
+        });
       }
   }
 });

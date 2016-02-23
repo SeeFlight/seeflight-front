@@ -109,8 +109,8 @@
 				</div>
 			</a>
 		</div>
-		<div ng-show="!settings.isLoading" class="col-sm-4 flights-column hidden-xs" ng-repeat="i in settings.daysBeforeDepart track by $index" ng-if="$index>=settings.desktopState && $index<settings.desktopState+settings.maxColumnsDisplayed" callback="checkUpdates">
-			<div class="col-xs-12 flight-list" ng-repeat="flight in $parent.$parent.filteredFlights = (response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare')">
+		<div ng-show="!settings.isLoading" class="col-sm-4 flights-column hidden-xs" ng-repeat="i in settings.daysBeforeDepart track by $index" ng-if="$index>=settings.desktopState && $index<settings.desktopState+settings.maxColumnsDisplayed">
+			<div class="col-xs-12 flight-list" ng-repeat="flight in $parent.addFilteredFlights($parent.$parent.filteredFlights = (response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'))" flight="flight" callback="checkUpdates(flight)" scroll>
 				<div class="row">
 					<div class="col-xs-6">
 						<p><strong>Depart in <span class="days">{{::flight.daysToDeparture}}</span> {{::flight.daysToDeparture == 1 ? "day" : "days"}}</strong><br>
@@ -130,7 +130,7 @@
 							{{::flight.lengthOfStay == 1 ? "day" : "days"}} in destination
 						</p>
 						<p ng-repeat="price in flight.prices | orderBy:'price'" class="small" ng-init="local.settings.isLoading = false">
-							<span>{{price.provider}} <a href="{{price.deeplink}}" target="_blank" ng-if="price.price">{{flight.currencyCode}}{{price.price}}</a><button ng-if="!price.price" class="btn btn-primary"><span ng-click="local.settings.isLoading == true ? '' : updateFlightPrice(flight, local.settings.isLoading);local.settings.isLoading=true;" class="glyphicon glyphicon-refresh" ng-class="local.settings.isLoading == true ? 'glyphicon-refresh-animate' : ''"></span></button></span>
+							<span>{{price.provider}} <a href="{{price.deeplink}}" target="_blank" ng-if="price.price">{{flight.currencyCode}}{{price.price}}</a><button ng-if="!price.price" class="btn btn-primary"><span ng-click="flight.isLoading == true ? '' : updateFlightPrice(flight);flight.isLoading=true;" class="glyphicon glyphicon-refresh" ng-class="flight.isLoading == true ? 'glyphicon-refresh-animate' : ''"></span></button></span>
 						</p>
 					</div>
 				</div>

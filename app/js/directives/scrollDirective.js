@@ -4,10 +4,15 @@ angular.module('seeflight.directives')
   return {
       restrict: 'A',
       scope: {
-          callback: '&'
+          callback: '&',
+          flight:'='
       },
       link: function ($scope, element, attrs) {
-        angular.element($window).bind("scroll", $scope.callback());
+        angular.element($window).bind("scroll", function(){
+    		if($window.scrollY+$window.screen.availHeight>element[0].offsetTop){
+        		$scope.callback($scope.flight);
+    		}
+        });
       }
   }
 });
