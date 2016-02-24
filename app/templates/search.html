@@ -53,13 +53,13 @@
 		<div class="col-sm-12">
 			<ul class="nav nav-pills text-center visible-xs">
 			  <li ng-repeat="days in settings.daysBeforeDepart" ng-class="settings.mobileState==$index ? '' : 'hidden'">
-			  	<div><span class="fui-arrow-left pull-left" ng-click="settings.mobileState=$index-1" ng-show="!$first"></span>Depart in {{days+1}}-{{days+5}} days <span class="fui-arrow-right pull-right" ng-click="settings.mobileState=$index+1" ng-show="!$last"></span>
+			  	<div><span class="fui-arrow-left pull-left" ng-click="settings.mobileState=$index-1;settings.poolUpdate=[]" ng-show="!$first"></span>Depart in {{days+1}}-{{days+5}} days <span class="fui-arrow-right pull-right" ng-click="settings.mobileState=$index+1;settings.poolUpdate=[]" ng-show="!$last"></span>
 			  	</div>
 			  </li>
 			</ul>
 			<ul class="nav nav-pills text-center hidden-xs">
 			  <li class="col-sm-4" ng-repeat="days in settings.daysBeforeDepart" ng-show="$index>=settings.desktopState && $index<settings.desktopState+settings.maxColumnsDisplayed">
-			  	<div><span class="fui-arrow-left pull-left" ng-click="settings.desktopState=settings.desktopState-settings.maxColumnsDisplayed" ng-show="!$first && $index%settings.maxColumnsDisplayed==0"></span>Depart in {{days+1}}-{{days+5}} days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span><span class="fui-arrow-right pull-right" ng-click="settings.desktopState=settings.desktopState+settings.maxColumnsDisplayed" ng-show="!$last && $index%settings.maxColumnsDisplayed==settings.maxColumnsDisplayed-1"></span>
+			  	<div><span class="fui-arrow-left pull-left" ng-click="settings.desktopState=settings.desktopState-settings.maxColumnsDisplayed;settings.poolUpdate=[]" ng-show="!$first && $index%settings.maxColumnsDisplayed==0"></span>Depart in {{days+1}}-{{days+5}} days <span ng-class="{'fui-triangle-down' : settings.showSpecificDepartureArray == false , 'fui-triangle-up' : settings.showSpecificDepartureArray == true}" ng-click="settings.showSpecificDepartureArray = !settings.showSpecificDepartureArray"></span><span class="fui-arrow-right pull-right" ng-click="settings.desktopState=settings.desktopState+settings.maxColumnsDisplayed;settings.poolUpdate=[]" ng-show="!$last && $index%settings.maxColumnsDisplayed==settings.maxColumnsDisplayed-1"></span>
 			  	</div>
 			  </li>
 			</ul>
@@ -83,7 +83,7 @@
 		  </div>  
 		</div>
 		<div ng-show="!settings.isLoading" ng-if="settings.mobileState==$index" class="flights-column visible-xs" ng-repeat="i in settings.daysBeforeDepart track by $index">
-			<a class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'" href="{{flight.deepLink}}" target="_blank">
+			<div class="col-xs-12 flight-list" ng-repeat="flight in response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'" href="{{flight.deepLink}}" flight="flight" callback="checkUpdates(flight)">
 				<div class="row">
 					<div class="col-xs-6">
 						<p><strong>Depart in <span class="days">{{::flight.daysToDeparture}}</span> {{::flight.daysToDeparture == 1 ? "day" : "days"}}</strong><br>
@@ -93,12 +93,17 @@
 							<span class="formated-date">{{::flight.returnFormatedDate}}</span>
 						</p>
 					</div>
-					<div class="col-xs-6 text-center">
-						<p class="h4 margin-top-2">
-							<span ng-repeat="number in getPriceArray(flight) track by $index" class="price">{{::number}}</span>
-						</p>
+					<div class="col-xs-6 text-center price-information">
+						<a href="{{flight.deepLink}}" target="_blank">
+							<p class="h4 margin-top-2">
+								<span ng-repeat="number in getPriceArray(flight) track by $index" class="price">{{::number}}</span>
+							</p>
+						</a>
 						<p class="margin-top-2"><span class="days-in-destination"><strong>{{::flight.lengthOfStay}}</strong></span><br>
 							{{::flight.lengthOfStay == 1 ? "day" : "days"}} in destination
+						</p>
+						<p ng-repeat="price in flight.prices | orderBy:'price'" class="small" ng-init="local.settings.isLoading = false">
+							<span>{{price.provider}} <a href="{{price.deeplink}}" target="_blank" ng-if="price.price">{{flight.currencyCode}}{{price.price}}</a><button ng-if="!price.price" class="btn btn-primary"><span ng-click="flight.isLoading == true ? '' : updateFlightPrice(flight);flight.isLoading=true;" class="glyphicon glyphicon-refresh" ng-class="flight.isLoading == true ? 'glyphicon-refresh-animate' : ''"></span></button></span>
 						</p>
 					</div>
 				</div>
@@ -107,7 +112,7 @@
 						<img class="center-block img-responsive" src="/images/{{::flight.airlineCode}}.png"></img>
 					</div>
 				</div>
-			</a>
+			</div>
 		</div>
 		<div ng-show="!settings.isLoading" class="col-sm-4 flights-column hidden-xs" ng-repeat="i in settings.daysBeforeDepart track by $index" ng-if="$index>=settings.desktopState && $index<settings.desktopState+settings.maxColumnsDisplayed">
 			<div class="col-xs-12 flight-list" ng-repeat="flight in $parent.addFilteredFlights($parent.$parent.filteredFlights = (response.flights | priceFilter : settings.maxPrice | departureFilter : i:(i+5):settings.specificDepartureDate:settings.specificDepartureArray | daysInDestinationFilter: settings.daysInDestination.array | returnFilter : settings.specificReturnDate | orderBy:'lowestFare'))" flight="flight" callback="checkUpdates(flight)" scroll>

@@ -1,6 +1,6 @@
 angular.module('seeflight.controllers')
 
-.controller('SearchController', function($scope, $state, $stateParams, Search, properties, $window){
+.controller('SearchController', function($scope, $state, $stateParams, Search, properties, $window, $interval){
 
 	$scope.response = {
 		flights : []
@@ -28,7 +28,9 @@ angular.module('seeflight.controllers')
 		},
 		mobileState : 0,
 		desktopState : 0,
-		currentPos : 0
+		currentPos : 0,
+		poolUpdate : [],
+		updateInterval : 1000
 	};
 
 	$scope.search = function(search){
@@ -170,7 +172,7 @@ angular.module('seeflight.controllers')
 	$scope.checkUpdates = function(flight){
 		if(flight.isLoading !== true){
 			flight.isLoading = true;
-			$scope.updateFlightPrice(flight);
+			$scope.settings.poolUpdate.push(flight);
 		}
 	};
 
@@ -179,5 +181,11 @@ angular.module('seeflight.controllers')
 			$scope.totalFilteredFlights[flights[i]._id] = flights[i];
 		}
 		return flights;
-	}
+	};
+
+	$interval(function(){
+		if($scope.settings.poolUpdate.length>0){
+			$scope.updateFlightPrice($scope.settings.poolUpdate.pop());
+		}
+	}, $scope.settings.updateInterval);
 });
