@@ -1832,3 +1832,10 @@ textarea.w-select {
   padding: 10px;
   background-color: #dddddd;
 }
+
+
+
+.select-primary .select2-choice{
+    background-color : white;
+    color : #1abc9c;
+}

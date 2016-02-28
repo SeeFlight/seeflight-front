@@ -993,12 +993,19 @@
 	      url = url.replace(("https://webflow.com"), ("http://formdata.webflow.com"));
 	    }
 	    var urlSearch;
-	    if(Cookies.get("seeflight_beta_test") && JSON.parse(Cookies.get("seeflight_beta_test")).isBeta === true){
-	    	urlSearch = "search#/search?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO;
+	    var origin = payload.fields.FROM;
+	    var destination = payload.fields.TO;
+
+	    if(origin && destination){
+		    //if(Cookies.get("seeflight_beta_test") && JSON.parse(Cookies.get("seeflight_beta_test")).isBeta === true){
+		    	urlSearch = "search#/search?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO+'&daysInDestination='+$("select").select2("val");
+		    //}else{
+		    //	urlSearch = "join-beta?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO;
+		    //}
+		    document.location.href = urlSearch;
 	    }else{
-	    	urlSearch = "join-beta?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO;
+	    	document.location.reload();
 	    }
-	    document.location.href = urlSearch;
 	  }
 
 	

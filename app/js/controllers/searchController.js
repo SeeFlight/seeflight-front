@@ -14,18 +14,11 @@ angular.module('seeflight.controllers')
 		maxColumnsDisplayed : 3,
 		showSpecificDepartureArray : false,
 		isLoading : false,
-		specificDepartureArray : createArray(properties.MAX_DAYS_BEFORE_DEPARTURE),
+		specificDepartureArray : createArray(1, properties.MAX_DAYS_BEFORE_DEPARTURE),
 		minDepartureDate : new Date().getTime()+24*60*60*1000,
 		maxDepartureDate : new Date().getTime()+properties.MAX_DAYS_BEFORE_DEPARTURE*24*60*60*1000,
 		minReturnDate : new Date().getTime()+2*24*60*60*1000,
         maxReturnDate : new Date().getTime()+(properties.MAX_DAYS_BEFORE_DEPARTURE+properties.MAX_DAYS_IN_DESTINATION)*24*60*60*1000,
-		daysInDestination : {
-			array : createArray(properties.MAX_DAYS_IN_DESTINATION),
-			firstChbx : true,
-			secondChbx : true,
-			thirdChbx : true,
-			fourthChbx : true
-		},
 		mobileState : 0,
 		desktopState : 0,
 		currentPos : 0,
@@ -111,14 +104,17 @@ angular.module('seeflight.controllers')
 	$scope.getPriceArray = function(flight){
 		var price = flight.lowestFare;
 		var deeplink = flight.deepLink;
+		var airlineCode = flight.airlineCode;
 		for(var i=0; i<flight.prices.length; i++){
 			if(flight.prices[i].price<price){
 				price = flight.prices[i].price;
 				deeplink = flight.prices[i].deeplink;
+				airlineCode = flight.prices[i].airlineCode;
 			}
 		}
 		flight.lowestFare = price;
 		flight.deepLink = deeplink;
+		flight.airlineCode = airlineCode;
 		var priceArray = [];
 		priceArray.push(flight.currencyCode);
 		priceArray.push.apply(priceArray, price.toString().split(""));
@@ -132,11 +128,42 @@ angular.module('seeflight.controllers')
 			origin : $stateParams.origin, 
 			destination : $stateParams.destination
 		});
+		if($stateParams.daysInDestination){
+			if($stateParams.daysInDestination<=5){
+				$scope.settings.daysInDestination = {
+					array : createArray(1,5),
+					firstChbx : true,
+					secondChbx : false,
+					thirdChbx : false
+				};
+			}else if($stateParams.daysInDestination>5 && $stateParams.daysInDestination<=10){
+				$scope.settings.daysInDestination = {
+					array : createArray(6, 10),
+					firstChbx : false,
+					secondChbx : true,
+					thirdChbx : false
+				};
+			}else{
+				$scope.settings.daysInDestination = {
+					array : createArray(11,15),
+					firstChbx : false,
+					secondChbx : false,
+					thirdChbx : true
+				};
+			}
+		}else{
+			$scope.settings.daysInDestination = {
+				array : createArray(1, 15),
+				firstChbx : true,
+				secondChbx : true,
+				thirdChbx : true
+			};
+		}
 	}
 
-	function createArray(n){
+	function createArray(start, end){
 		var array = [];
-		for (var i = 1; i <= n; i++) {
+		for (var i=start; i <= end; i++) {
 		  array.push(i);
 		}
 		return array;

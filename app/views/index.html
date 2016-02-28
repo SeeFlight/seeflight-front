@@ -15,6 +15,7 @@
   <meta property="og:image" content="https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-15/s320x320/e15/10852857_754763667931556_8717907_n.jpg">
   <meta name="generator" content="Webflow">
   <link rel="stylesheet" type="text/css" href="css/normalize.css">
+  <link href="css/flat-ui-pro.min.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="css/webflow.css">
   <link rel="stylesheet" type="text/css" href="css/sflight.css">
   <link rel="stylesheet" type="text/css" href="vendor/css/autocomplete.css">
@@ -93,6 +94,15 @@
         <label class="destination" for="CITY"><span>TO</span>
         </label>
         <input class="w-input to cities" id="CITY" type="text" placeholder="CITY" name="TO" data-name="TO" id="destination" autocomplete="off">
+        <label class="days-in-destination destination" for="days"><span>DAYS IN DESTINATION</span>
+        </label>
+        <select class="w-input form-control select select-primary select-block mbl">
+          <optgroup label="Days in destination">
+            <option value="1">Week-end (1-5 days)</option>
+            <option value="6">One week (6-10 days)</option>
+            <option value="11">Two weeks (11-15 days)</option>
+          </optgroup>
+        </select>
         <input class="w-button button" type="submit" value="ONE SEARCH" data-wait="Please wait...">
       </form>
     </div>
@@ -345,6 +355,7 @@
   </div>
   <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
   <script type="text/javascript" src="bower_components/js-cookie/src/js.cookie.js"></script>
+  <script type="text/javascript" src="vendor/js/flat-ui-pro.min.js"></script>
   <script type="text/javascript" src="vendor/js/seeflight/seeflight.js"></script>
   <script type="text/javascript" src="vendor/js/webflow.js"></script>
   <script type="text/javascript" src="vendor/js/autocomplete.js"></script>
