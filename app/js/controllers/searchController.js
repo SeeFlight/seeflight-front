@@ -121,12 +121,14 @@ angular.module('seeflight.controllers')
 		return priceArray;
 	};
 
-	if($stateParams.origin && $stateParams.destination){
+	if($stateParams.origin && $stateParams.destination && $stateParams.pointOfSale){
 		$scope.search.origin = $stateParams.origin;
 		$scope.search.destination = $stateParams.destination;
+		$scope.search.pointOfSale = $stateParams.pointOfSale;
 		$scope.search({
 			origin : $stateParams.origin, 
-			destination : $stateParams.destination
+			destination : $stateParams.destination,
+			pointOfSale : $stateParams.pointOfSale
 		});
 		if($stateParams.daysInDestination){
 			if($stateParams.daysInDestination<=5){
@@ -160,6 +162,8 @@ angular.module('seeflight.controllers')
 			};
 		}
 	}
+	$scope.search.originCityName = $stateParams.originName;
+	$scope.search.destinationCityName = $stateParams.destinationName;
 
 	function createArray(start, end){
 		var array = [];

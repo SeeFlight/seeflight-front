@@ -5,7 +5,7 @@ angular.module('seeflight.services')
     getSearch: function(search) {
       var config = {
         method : 'GET',
-        url : properties.DISTANT_HOST+'searches?origin='+search.origin+'&destination='+search.destination
+        url : properties.DISTANT_HOST+'searches?origin='+search.origin+'&destination='+search.destination+'&pointOfSale='+search.pointOfSale
       };
       return $http(config).then(function(response) {
         return response;

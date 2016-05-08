@@ -36,9 +36,11 @@ $('.cities').keyup(function(key){
 							data[i].PlaceId=data[i].PlaceId.substring(0,3);
 						}
 						$divCity.attr("data-city-code", data[i].PlaceId);
-						$divCity.attr("data-city-name", data[i].PlaceName);
+						$divCity.attr("data-point-of-sale", data[i].CountryId);
+						var cityName = data[i].PlaceName+" ("+data[i].PlaceId+")";
+						$divCity.attr("data-city-name", cityName);
 						var $p = $(document.createElement('a'));
-						$p.text(data[i].PlaceName+" ("+data[i].PlaceId+")");
+						$p.text(cityName);
 
 						var $span = $(document.createElement('span'));
 						$span.addClass("country-result");
@@ -62,12 +64,15 @@ $('#email-form').keypress(function(e){
 $('form').on('click', '.city-result', function () { 
 	var cityCode = $(this).attr("data-city-code");
 	var cityName = $(this).attr("data-city-name");
+	var pointOfSale = $(this).attr("data-point-of-sale");
 	var isOrigin = $(this).parent().attr("data-is-origin");
 	if(isOrigin === "true"){
 		$('input.from').attr("data-city-code", cityCode);
+		$('input.from').attr("data-point-of-sale", pointOfSale);
 		$('input.from').val(cityName);
 	}else{
 		$('input.to').attr("data-city-code", cityCode);
+		$('input.to').attr("data-point-of-sale", pointOfSale);
 		$('input.to').val(cityName);
 	}
 	$('#cities-result').addClass("hidden");

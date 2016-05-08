@@ -1,0 +1,8 @@
+<div>
+	<input ng-model="cityName" type="text" class="form-control" placeholder="{{placeHolder}}" ng-init="cityName = cityCode">
+	<ul class="nav nav-list" id="cities-result" data-is-origin="true" ng-show="showCityResults">
+		<li ng-repeat="cityResult in cityResults" class="city-result" ng-click="setCityCode(cityResult);">
+			<a>{{cityResult.PlaceName}} ({{cityResult.PlaceId}})<span class="country-result">{{cityResult.CountryName}}</span></a>
+		</li>
+	</ul>
+</div>

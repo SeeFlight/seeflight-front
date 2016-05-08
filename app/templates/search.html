@@ -1,14 +1,14 @@
 <div class="col-sm-2 margin-top-2">
 	<div>
-		<form role="form">
+		<div>
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="FROM" ng-model="search.origin">
+				<city-autocomplete city-code="search.origin" placeholder="FROM" city-name="{{search.originCityName}}" point-of-sale="search.pointOfSale"></city-autocomplete>
 			</div>
 			<div class="form-group">
-				<input type="text" class="form-control" placeholder="TO" ng-model="search.destination">
+				<city-autocomplete city-code="search.destination" placeholder="TO" city-name="{{search.destinationCityName}}"></city-autocomplete>
 			</div>
 			<button class="btn btn-block btn-lg btn-primary" ng-click="search(search)">Search</button>
-		</form>
+		</div>
 	</div>
 	<div class="customization margin-top-2">
 		<div>
@@ -142,7 +142,7 @@
 			</div>
 		</div>
 		<div class="col-xs-12 text-center margin-top-4" ng-show="response.flights.length == 0 && !settings.isLoading">
-			<p>We are not showing yet this route, please come back tomorrow and we will have it available for you :)</p>
+			<p>We are not showing yet this route, please come back soon and we will have it available for you :)</p>
 		</div>
 	</div>
 </div>

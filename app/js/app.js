@@ -12,7 +12,7 @@ var module = angular.module('seeflight', ['ui.router', 'seeflight.controllers', 
       templateUrl: 'templates/home.html'
     })
     .state('search', {
-      url: '/search?origin&destination&daysInDestination',
+      url: '/search?origin&destination&daysInDestination&pointOfSale&originName&destinationName',
       controller: 'SearchController',
       templateUrl: 'templates/search.html'
     });
@@ -32,7 +32,8 @@ angular.module('seeflight.properties')
     DISTANT_HOST: 'http://localhost:8080/',
     MAX_DAYS_IN_DESTINATION : 15,
     MAX_DAYS_BEFORE_DEPARTURE : 45,
-    NB_FLIGHTS_DISPLAYED : 15
+    NB_FLIGHTS_DISPLAYED : 15,
+    AUTOCOMPLETE_API : "http://www.skyscanner.fr/dataservices/geo/v2.0/autosuggest/UK/en-EN/"
   }
 })());
 angular.module('seeflight.controllers')
@@ -158,12 +159,14 @@ angular.module('seeflight.controllers')
 		return priceArray;
 	};
 
-	if($stateParams.origin && $stateParams.destination){
+	if($stateParams.origin && $stateParams.destination && $stateParams.pointOfSale){
 		$scope.search.origin = $stateParams.origin;
 		$scope.search.destination = $stateParams.destination;
+		$scope.search.pointOfSale = $stateParams.pointOfSale;
 		$scope.search({
 			origin : $stateParams.origin, 
-			destination : $stateParams.destination
+			destination : $stateParams.destination,
+			pointOfSale : $stateParams.pointOfSale
 		});
 		if($stateParams.daysInDestination){
 			if($stateParams.daysInDestination<=5){
@@ -197,6 +200,8 @@ angular.module('seeflight.controllers')
 			};
 		}
 	}
+	$scope.search.originCityName = $stateParams.originName;
+	$scope.search.destinationCityName = $stateParams.destinationName;
 
 	function createArray(start, end){
 		var array = [];
@@ -319,6 +324,62 @@ angular.module('seeflight.filters')
 		}      
 		return out;
 	};
+});
+angular.module('seeflight.directives')
+
+.directive('cityAutocomplete', function($window, CityProvider) {
+  return {
+      restrict: 'E',
+      templateUrl: 'templates/directives/cityAutocomplete.html',
+      replace: true,
+      scope: {
+          callback: '&',
+          cityCode:'=',
+          cityName : '@',
+          placeHolder : '@',
+          pointOfSale : '='
+      },
+      link: function ($scope, element, attrs) {
+        $scope.setCityCode = function(cityResult){
+          $scope.cityName = cityResult.PlaceName+' ('+cityResult.PlaceId+')';
+          $scope.cityCode = cityResult.PlaceId;
+          $scope.pointOfSale = cityResult.CountryId === "UK" ? "GB" : cityResult.CountryId;
+          $scope.showCityResults = !$scope.showCityResults;
+        }
+
+        $(element[0]).keyup(function(key){
+          if(key.which === 9){
+            $scope.showCityResults = false;
+          }else if(key.which === 13){
+            if($scope.showCityResults && $scope.cityResults && $scope.cityResults.length>0){
+              $scope.setCityCode($scope.cityResults[0]);
+            }
+          }else{
+            var character = key.which || key.keyCode;
+            var c = String.fromCharCode(character);
+            var currentElement = $(this);
+            var isOrigin = $(this).hasClass("from");
+            $scope.showCityResults = true;
+            if($scope.cityName && $scope.cityName.length>0){
+              CityProvider.getCityPrediction({cityCode:$scope.cityName}).then(function(response){
+                if(response.status === 200){
+                  var data = response.data;
+                  var result;
+                  for(result in data){
+                    if(data[result].PlaceId.length>3){
+                      data[result].PlaceId=data[result].PlaceId.substring(0,3);
+                    }
+                  }
+                  $scope.cityResults = data;
+                }else{
+                  $scope.cityResults = [];
+                }
+              });
+            }
+          }
+        });
+      }
+  }
 });
 angular.module('seeflight.directives')
 
@@ -454,12 +515,28 @@ angular.module('seeflight.directives')
 });
 angular.module('seeflight.services')
 
+.factory('CityProvider', function($http, properties) {
+  return {
+    getCityPrediction: function(search) {
+      var url = properties.AUTOCOMPLETE_API;
+      url += search.cityCode;
+      url += "?isDestination=false&ccy=EUR";
+      var config = {
+        method : 'GET',
+        url : url
+      };
+      return $http(config);
+    }
+  }
+});
+angular.module('seeflight.services')
+
 .factory('Search', function($http, properties) {
   return {
     getSearch: function(search) {
       var config = {
         method : 'GET',
-        url : properties.DISTANT_HOST+'searches?origin='+search.origin+'&destination='+search.destination
+        url : properties.DISTANT_HOST+'searches?origin='+search.origin+'&destination='+search.destination+'&pointOfSale='+search.pointOfSale
       };
       return $http(config).then(function(response) {
         return response;

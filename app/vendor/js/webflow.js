@@ -998,7 +998,7 @@
 
 	    if(origin && destination){
 		    //if(Cookies.get("seeflight_beta_test") && JSON.parse(Cookies.get("seeflight_beta_test")).isBeta === true){
-		    	urlSearch = "search#/search?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO+'&daysInDestination='+$("select").select2("val");
+		    	urlSearch = "search#/search?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&pointOfSale="+$("input.from").attr("data-point-of-sale")+"&destinationName="+payload.fields.TO+'&daysInDestination='+$("select").select2("val");
 		    //}else{
 		    //	urlSearch = "join-beta?origin="+$("input.from").attr("data-city-code")+"&originName="+payload.fields.FROM+"&destination="+$("input.to").attr("data-city-code")+"&destinationName="+payload.fields.TO;
 		    //}
