@@ -196,7 +196,8 @@ angular.module('seeflight.controllers')
 				array : createArray(1, 15),
 				firstChbx : true,
 				secondChbx : true,
-				thirdChbx : true
+				thirdChbx : true,
+				fourthChbx : true
 			};
 		}
 	}
